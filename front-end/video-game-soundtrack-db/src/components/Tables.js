@@ -7,20 +7,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-export default function Tables(props) {
-  const [data, setData] = useState(null);
-  console.log(props);
-  const loadData = async () => {
-    const response = await fetch(`http://localhost:9124/${props.tableName}`, {
-      method: "Get",
-    });
-    const data = await response.json();
-    setData(data);
-  };
-  useEffect(() => {
-    loadData();
-  }, [props.tableName]);
-
+export default function Tables({ data }) {
+  // if id in fields, get list of ids to values
   if (data) {
     const columns = Object.keys(data[0]);
     return (

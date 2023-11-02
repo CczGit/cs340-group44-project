@@ -42,11 +42,11 @@ app.get("/", function (req, res) {
 });
 
 app.get("/:tableName", function (req, res) {
-  console.log(req.params.tableName);
   // Define our queries
   var tableName = req.params.tableName;
   var query1 = "SELECT * FROM ??;";
   db.pool.query(query1, [tableName], function (err, results, fields) {
+    console.log(results);
     res.send(JSON.stringify(results));
   });
 });
