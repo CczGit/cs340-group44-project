@@ -5,6 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { Button } from "@mui/material";
 import Paper from "@mui/material/Paper";
 
 export default function Tables({ data }) {
@@ -13,26 +14,49 @@ export default function Tables({ data }) {
   if (data) {
     const columns = Object.keys(data[0]);
     return (
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 550 }} size="small" aria-label="a dense table">
+      <TableContainer
+        className="tableContainer"
+        component={Paper}
+        sx={{
+          borderRadius: "5px",
+          backgroundColor: "#0000001d",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+          color: "aliceblue",
+        }}
+      >
+        <Table size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
               {columns.map((column) => (
-                <TableCell key={column}>{column}</TableCell>
+                <TableCell
+                  sx={{ color: "aliceblue", fontSize: "large" }}
+                  key={column}
+                >
+                  {column}
+                </TableCell>
               ))}
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((row, index) => (
-              <TableRow
-                key={index}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
+              <TableRow key={index}>
                 {Object.values(row).map((field, index) => (
-                  <TableCell key={index} component="th" scope="row">
+                  <TableCell
+                    key={index}
+                    component="th"
+                    scope="row"
+                    sx={{ color: "aliceblue" }}
+                  >
                     {field}
                   </TableCell>
                 ))}
+                <TableCell>
+                  <Button color="error" variant="contained" size="small">
+                    {" "}
+                    DELETE{" "}
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

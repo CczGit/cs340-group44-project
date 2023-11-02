@@ -25,8 +25,10 @@ export default function PageBody({ tableName }) {
   if (data && fields) {
     return (
       <>
+        <h1>{tableName}</h1>
+
         <Tables data={data} />
-        <InputForm fields={fields} table={tableName} data={data} />
+        <InputForm fields={fields} tableName={tableName} data={data} />
       </>
     );
   } else {

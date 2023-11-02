@@ -28,7 +28,7 @@ export default function App() {
             <Route path="/:tableName" exact element={<PageBodyWrapper />} />
           </Routes>
         </div>
-        <footer></footer>
+        <footer>© 2023 Rafael Cruz, Carleton Foster</footer>
       </Router>
     </div>
   );

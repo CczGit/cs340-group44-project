@@ -1,8 +1,10 @@
 .App {
   text-align: center;
+  color: aliceblue;
 }
 body {
-  max-width: 75;
+  /* max-width: 75; */
+  background-color: #282c34;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,6 +12,29 @@ body {
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 2%;
+  margin: 2% auto;
+  background-color: #0000001d;
+  min-width: 47%;
+  max-width: 80%;
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+button {
+  transition: transform 0.2s;
+}
+
+form {
+  margin-inline: 5%;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -22,10 +47,14 @@ nav {
   min-width: 50vw;
   justify-content: space-evenly;
 }
-header {
+header,
+footer {
   padding: 50px 0px 50px;
 }
-
+a {
+  font-size: x-large;
+  color: white;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -37,16 +66,28 @@ header {
   color: white;
 }
 
+.tableContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 50%;
+  padding: 0.5%;
+  margin-bottom: 1%;
+}
+
 .card {
+  font-family: Arial, Helvetica, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 75vw;
   min-height: 20vh;
-  /* background-color: #4c7ee4; */
+  background: linear-gradient(to right, #0062ff85, #60efff85);
   box-shadow: 0px 0px 10px 10px #0000005d;
+  border-radius: 30px;
   flex-direction: column;
-  padding: 1%;
+  padding: 2.5%;
+  margin: 15px;
 }
 
 .App-link {
