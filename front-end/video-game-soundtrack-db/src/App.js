@@ -22,15 +22,13 @@ export default function App() {
         <header>
           <Navigation />
         </header>
-        <body>
-          <div className="card">
-            <Routes>
-              <Route path="/" exact element={<HomePage />} />
-              <Route path="/:tableName" exact element={<PageBodyWrapper />} />
-            </Routes>
-          </div>
-        </body>
-        <footer></footer>
+        <div className="card">
+          <Routes>
+            <Route path="/" exact element={<HomePage />} />
+            <Route path="/:tableName" exact element={<PageBodyWrapper />} />
+          </Routes>
+        </div>
+        <footer>© 2023 Rafael Cruz, Carleton Foster</footer>
       </Router>
     </div>
   );
