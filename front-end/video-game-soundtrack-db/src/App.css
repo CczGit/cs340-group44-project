@@ -2,6 +2,7 @@
   text-align: center;
   color: aliceblue;
 }
+
 body {
   /* max-width: 75; */
   background-color: #282c34;
@@ -9,6 +10,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -32,8 +34,15 @@ body {
 button {
   transition: transform 0.2s;
 }
+
 form {
   margin-inline: 5%;
+}
+
+table,
+th,
+td {
+  border: 1px solid;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -41,19 +50,23 @@ form {
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
 nav {
   display: flex;
   min-width: 50vw;
   justify-content: space-evenly;
 }
+
 header,
 footer {
   padding: 50px 0px 50px;
 }
+
 a {
   font-size: x-large;
   color: white;
 }
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -97,6 +110,7 @@ a {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
