@@ -40,47 +40,58 @@ export default function UpdateComponent({ data, fields, onClose }) {
   };
 
   return (
-    <Box
-      component="form"
-      sx={{
-        "& > :not(style)": {
-          m: 1,
-          p: 1,
-          display: "flex",
-          alignItems: "flex-start",
-        },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={currValue}
-        label="ID"
-        helperText="ID"
-        onChange={handleSelectChange}
+    <div className="BoxWrapper">
+      <Box
+        component="form"
+        sx={{
+          "& > :not(style)": {
+            m: 1,
+            p: 1,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "aliceblue",
+          },
+        }}
+        noValidate
+        autoComplete="off"
       >
-        {data.map((datum, index) => (
-          <MenuItem key={index} value={datum[idVar]}>
-            {`${datum[idVar]}: ${datum[nameVar]}`}
-          </MenuItem>
-        ))}
-      </Select>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={currValue}
+          label="ID"
+          helperText="ID"
+          onChange={handleSelectChange}
+        >
+          {data.map((datum, index) => (
+            <MenuItem key={index} value={datum[idVar]}>
+              {`${datum[idVar]}: ${datum[nameVar]}`}
+            </MenuItem>
+          ))}
+        </Select>
 
-      {fields.map((field, index) => (
-        <div>
-          <TextField
-            key={index}
-            id={field}
-            label={field}
-            variant="standard"
-            value={updateFieldValues[field] || ""}
-            onChange={handleUpdateFieldChange(field)}
-          />
-        </div>
-      ))}
-      <Button onClick={handleSubmit}>UPDATE</Button>
-    </Box>
+        {fields.map((field, index) => (
+          <div>
+            <TextField
+              sx={{
+                "& > :not(style)": {
+                  color: "aliceblue",
+                },
+              }}
+              key={index}
+              id={field}
+              label={field}
+              variant="standard"
+              value={updateFieldValues[field] || ""}
+              onChange={handleUpdateFieldChange(field)}
+            />
+          </div>
+        ))}
+        <Button variant="contained" type="submit" onClick={handleSubmit}>
+          UPDATE
+        </Button>
+      </Box>
+    </div>
   );
 }

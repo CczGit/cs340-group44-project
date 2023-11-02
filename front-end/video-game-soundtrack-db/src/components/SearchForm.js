@@ -17,34 +17,44 @@ export default function SearchComponent({ fields, onClose }) {
   };
 
   return (
-    <Box
-      component="form"
-      sx={{
-        "& > :not(style)": {
-          m: 1,
-          p: 1,
-          width: "auto",
-          display: "flex",
-          alignItems: "flex-start",
-        },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      {fields.map((field, index) => (
-        <>
-          <TextField
-            key={index}
-            id={field}
-            placeholder={field}
-            label={field}
-            variant="standard"
-            value={searchFieldValues[field]}
-            onChange={handleSearchFieldChange(field)}
-          />
-        </>
-      ))}
-      <Button onClick={handleSubmit}>SEARCH</Button>
-    </Box>
+    <div className="BoxWrapper">
+      <Box
+        component="form"
+        sx={{
+          "& > :not(style)": {
+            m: 1,
+            p: 1,
+            width: "auto",
+            display: "flex",
+            alignItems: "flex-start",
+            color: "aliceblue",
+          },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        {fields.map((field, index) => (
+          <>
+            <TextField
+              sx={{
+                "& > :not(style)": {
+                  color: "aliceblue",
+                },
+              }}
+              key={index}
+              id={field}
+              placeholder={field}
+              label={field}
+              variant="standard"
+              value={searchFieldValues[field]}
+              onChange={handleSearchFieldChange(field)}
+            />
+          </>
+        ))}
+        <Button variant="contained" type="submit" onClick={handleSubmit}>
+          SEARCH
+        </Button>
+      </Box>
+    </div>
   );
 }

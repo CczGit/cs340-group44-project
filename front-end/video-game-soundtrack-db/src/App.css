@@ -32,7 +32,6 @@ body {
 button {
   transition: transform 0.2s;
 }
-
 form {
   margin-inline: 5%;
 }

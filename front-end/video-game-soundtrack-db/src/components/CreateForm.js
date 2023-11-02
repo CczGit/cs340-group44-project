@@ -27,33 +27,43 @@ export default function CreateForm({ fields, onClose }) {
     onClose();
   };
   return (
-    <Box
-      component="form"
-      sx={{
-        "& > :not(style)": {
-          m: 1,
-          p: 1,
-          width: "auto",
-          display: "flex",
-          alignItems: "center",
-        },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      {fields.map((field, index) => (
-        <>
-          <TextField
-            key={index}
-            id={field}
-            label={field}
-            variant="standard"
-            value={createFieldValues[field]}
-            onChange={handleCreateFieldChange(field)}
-          />
-        </>
-      ))}
-      <Button onClick={handleSubmit}>CREATE</Button>
-    </Box>
+    <div className="BoxWrapper">
+      <Box
+        component="form"
+        sx={{
+          "& > :not(style)": {
+            m: 1,
+            p: 1,
+            width: "auto",
+            display: "flex",
+            flexDirection: "column",
+            color: "aliceblue",
+          },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        {fields.map((field, index) => (
+          <>
+            <TextField
+              sx={{
+                "& > :not(style)": {
+                  color: "aliceblue",
+                },
+              }}
+              key={index}
+              id={field}
+              label={field}
+              variant="standard"
+              value={createFieldValues[field]}
+              onChange={handleCreateFieldChange(field)}
+            />
+          </>
+        ))}
+        <Button variant="contained" type="submit" onClick={handleSubmit}>
+          CREATE
+        </Button>
+      </Box>
+    </div>
   );
 }
