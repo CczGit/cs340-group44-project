@@ -38,7 +38,8 @@ export default function UpdateComponent({ data, fields, onClose }) {
   const handleSubmit = () => {
     onClose();
   };
-
+  const fkFields = fields.filter((word) => word.includes("ID")).slice(1);
+  console.log(fkFields, "test");
   return (
     <div className="BoxWrapper">
       <Box

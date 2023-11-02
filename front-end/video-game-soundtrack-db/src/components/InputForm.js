@@ -25,7 +25,13 @@ export default function InputForm({ data, tableName, fields }) {
     <>
       {(create || update || search) && (
         <div className="formContainer">
-          {create && <CreateForm fields={fields} onClose={createHandler} />}
+          {create && (
+            <CreateForm
+              fields={fields}
+              tableName={tableName}
+              onClose={createHandler}
+            />
+          )}
           {update && (
             <UpdateForm fields={fields} data={data} onClose={updateHandler} />
           )}
@@ -36,8 +42,12 @@ export default function InputForm({ data, tableName, fields }) {
         variant="contained"
         aria-label="outlined primary button group"
       >
-        {!create && <Button onClick={createHandler}>CREATE</Button>}
-        {!update && <Button onClick={updateHandler}>UPDATE</Button>}
+        {!create && !tableName.includes("_") && (
+          <Button onClick={createHandler}>CREATE</Button>
+        )}
+        {!update && !tableName.includes("_") && (
+          <Button onClick={updateHandler}>UPDATE</Button>
+        )}
         {!search && <Button onClick={searchHandler}>SEARCH</Button>}
       </ButtonGroup>
     </>

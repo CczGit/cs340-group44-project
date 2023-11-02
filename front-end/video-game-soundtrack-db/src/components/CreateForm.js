@@ -9,7 +9,7 @@ import {
   InputLabel,
 } from "@mui/material";
 
-export default function CreateForm({ fields, onClose }) {
+export default function CreateForm({ fields, onClose, tableName }) {
   const [createFieldValues, setCreateFieldValues] = useState(() => {
     const initialFieldValues = {};
     fields.forEach((field) => {
