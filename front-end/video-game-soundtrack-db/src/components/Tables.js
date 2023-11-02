@@ -9,11 +9,12 @@ import Paper from "@mui/material/Paper";
 
 export default function Tables({ data }) {
   // if id in fields, get list of ids to values
+
   if (data) {
     const columns = Object.keys(data[0]);
     return (
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+        <Table sx={{ minWidth: 550 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
               {columns.map((column) => (

@@ -3,6 +3,7 @@ import Tables from "./Tables";
 import InputForm from "./InputForm";
 
 export default function PageBody({ tableName }) {
+  // add search and add buttons
   const [data, setData] = useState(null);
   const [fields, setFields] = useState(null);
   const loadData = async () => {
@@ -11,6 +12,7 @@ export default function PageBody({ tableName }) {
     });
     const data = await response.json();
     setData(data);
+
     if (!tableName.includes("_")) {
       setFields(Object.keys(data[0]).slice(1));
     } else {
@@ -24,7 +26,7 @@ export default function PageBody({ tableName }) {
     return (
       <>
         <Tables data={data} />
-        <InputForm fields={fields} table={tableName} />
+        <InputForm fields={fields} table={tableName} data={data} />
       </>
     );
   } else {
