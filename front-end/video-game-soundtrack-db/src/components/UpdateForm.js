@@ -1,14 +1,7 @@
 import React, { useState } from "react";
-import {
-  TextField,
-  Box,
-  Button,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { TextField, Box, Button, Select, MenuItem } from "@mui/material";
 
-export default function UpdateComponent({ data, fields, onClose }) {
+export default function UpdateForm({ data, fields, onClose, fkeys }) {
   const idVar = Object.keys(data[0])[0];
   const nameVar = Object.keys(data[0])[1];
   const [currValue, setCurrValue] = useState(data[0][idVar]);
@@ -33,13 +26,17 @@ export default function UpdateComponent({ data, fields, onClose }) {
     setCurrValue(selectedId);
     const selectedItem = data.find((datum) => datum[idVar] === selectedId);
     setUpdateFieldValues(selectedItem);
+    const fkeyIndex = Object.keys(fkeys[0])[0];
+    setFkey(selectedItem[fkeyIndex]);
   };
 
   const handleSubmit = () => {
     onClose();
   };
-  const fkFields = fields.filter((word) => word.includes("ID")).slice(1);
-  console.log(fkFields, "test");
+  const [fkey, setFkey] = useState(null);
+  const handleFKChange = (e) => {
+    setFkey(e.target.value);
+  };
   return (
     <div className="BoxWrapper">
       <Box
@@ -89,6 +86,27 @@ export default function UpdateComponent({ data, fields, onClose }) {
             />
           </div>
         ))}
+        {fkeys !== null && (
+          <>
+            <p>{Object.keys(fkeys[0])[0]}:</p>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Developer"
+              helperText="Developer"
+              onChange={handleFKChange}
+              value={fkey}
+            >
+              {fkeys.map((fkey, index) => (
+                <MenuItem key={index} value={fkey[Object.keys(fkey)[0]]}>
+                  {`${fkey[Object.keys(fkey)[0]]}: ${
+                    fkey[Object.keys(fkey)[1]]
+                  }`}
+                </MenuItem>
+              ))}
+            </Select>
+          </>
+        )}
         <Button variant="contained" type="submit" onClick={handleSubmit}>
           UPDATE
         </Button>

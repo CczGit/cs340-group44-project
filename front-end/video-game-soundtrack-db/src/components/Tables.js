@@ -35,7 +35,7 @@ export default function Tables({ data }) {
                   {column}
                 </TableCell>
               ))}
-              <TableCell></TableCell>
+              <TableCell sx={{ color: "white" }}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -51,7 +51,7 @@ export default function Tables({ data }) {
                     {field}
                   </TableCell>
                 ))}
-                <TableCell>
+                <TableCell sx={{ color: "white" }}>
                   <Button color="error" variant="contained" size="small">
                     {" "}
                     DELETE{" "}

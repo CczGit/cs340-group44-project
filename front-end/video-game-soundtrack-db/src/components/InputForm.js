@@ -4,7 +4,7 @@ import UpdateForm from "./UpdateForm";
 import SearchForm from "./SearchForm";
 import { Button, ButtonGroup } from "@mui/material";
 
-export default function InputForm({ data, tableName, fields }) {
+export default function InputForm({ data, tableName, fields, fkeys }) {
   // if id in fields -> get list of ids to values
   // use drop downs for ids
   const [create, setCreate] = useState(false);
@@ -26,14 +26,15 @@ export default function InputForm({ data, tableName, fields }) {
       {(create || update || search) && (
         <div className="formContainer">
           {create && (
-            <CreateForm
-              fields={fields}
-              tableName={tableName}
-              onClose={createHandler}
-            />
+            <CreateForm fields={fields} fkeys={fkeys} onClose={createHandler} />
           )}
           {update && (
-            <UpdateForm fields={fields} data={data} onClose={updateHandler} />
+            <UpdateForm
+              fields={fields}
+              data={data}
+              onClose={updateHandler}
+              fkeys={fkeys}
+            />
           )}
           {search && <SearchForm fields={fields} onClose={searchHandler} />}
         </div>

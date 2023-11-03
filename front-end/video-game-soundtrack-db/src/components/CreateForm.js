@@ -9,7 +9,7 @@ import {
   InputLabel,
 } from "@mui/material";
 
-export default function CreateForm({ fields, onClose, tableName }) {
+export default function CreateForm({ fields, fkeys, onClose }) {
   const [createFieldValues, setCreateFieldValues] = useState(() => {
     const initialFieldValues = {};
     fields.forEach((field) => {
@@ -25,6 +25,10 @@ export default function CreateForm({ fields, onClose, tableName }) {
   };
   const handleSubmit = () => {
     onClose();
+  };
+  const [fkey, setFkey] = useState(null);
+  const handleFKChange = (e) => {
+    setFkey(e.target.value);
   };
   return (
     <div className="BoxWrapper">
@@ -60,6 +64,25 @@ export default function CreateForm({ fields, onClose, tableName }) {
             />
           </>
         ))}
+        {fkeys !== null && (
+          <>
+            <p>{Object.keys(fkeys[0])[0]}:</p>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              onChange={handleFKChange}
+              value={fkey}
+            >
+              {fkeys.map((fkey, index) => (
+                <MenuItem key={index} value={fkey[Object.keys(fkey)[0]]}>
+                  {`${fkey[Object.keys(fkey)[0]]}: ${
+                    fkey[Object.keys(fkey)[1]]
+                  }`}
+                </MenuItem>
+              ))}
+            </Select>
+          </>
+        )}
         <Button variant="contained" type="submit" onClick={handleSubmit}>
           CREATE
         </Button>
