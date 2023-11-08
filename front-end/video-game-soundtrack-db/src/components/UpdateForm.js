@@ -51,15 +51,32 @@ export default function UpdateForm({
           "& > :not(style)": {
             m: 1,
             p: 1,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            textAlign: "center",
             color: "aliceblue",
           },
         }}
         noValidate
         autoComplete="off"
       >
+        {fields.map((field, index) => (
+          <div>
+            <TextField
+              sx={{
+                "& > :not(style)": {
+                  color: "aliceblue",
+                  textAlign: "center",
+                  fontSize: "large",
+                },
+              }}
+              key={index ** 0.0035}
+              id={field}
+              label={field}
+              variant="standard"
+              value={updateFieldValues[field] || ""}
+              onChange={handleUpdateFieldChange(field)}
+            />
+          </div>
+        ))}
         <p>{Object.keys(data[0])[0]}:</p>
         <Select
           labelId="demo-simple-select-label"
@@ -75,23 +92,6 @@ export default function UpdateForm({
           ))}
         </Select>
 
-        {fields.map((field, index) => (
-          <div>
-            <TextField
-              sx={{
-                "& > :not(style)": {
-                  color: "aliceblue",
-                },
-              }}
-              key={index ** 0.0035}
-              id={field}
-              label={field}
-              variant="standard"
-              value={updateFieldValues[field] || ""}
-              onChange={handleUpdateFieldChange(field)}
-            />
-          </div>
-        ))}
         {fkeys !== null && (
           <>
             <p>{Object.keys(fkeys[0])[0]}:</p>

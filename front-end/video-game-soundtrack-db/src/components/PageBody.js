@@ -23,6 +23,7 @@ export default function PageBody({ tableName }) {
 
   const loadData = useCallback(async () => {
     setData(null);
+    setFkeys(null);
     const response = await fetch(`http://localhost:9100/${tableName}`, {
       method: "Get",
     });

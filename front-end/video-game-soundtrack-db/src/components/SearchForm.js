@@ -68,6 +68,25 @@ export default function SearchForm({
         noValidate
         autoComplete="off"
       >
+        {fields.map((field, index) => (
+          <>
+            <TextField
+              sx={{
+                "& > :not(style)": {
+                  color: "aliceblue",
+                  fontSize: "large",
+                },
+              }}
+              key={index * 0.5}
+              id={field}
+              placeholder={field}
+              label={field}
+              variant="standard"
+              value={searchFieldValues[field]}
+              onChange={handleSearchFieldChange(field)}
+            />
+          </>
+        ))}
         <p>{Object.keys(data[0])[0]}:</p>
         <Select
           labelId="demo-simple-select-label"
@@ -90,24 +109,6 @@ export default function SearchForm({
             ))}
         </Select>
 
-        {fields.map((field, index) => (
-          <>
-            <TextField
-              sx={{
-                "& > :not(style)": {
-                  color: "aliceblue",
-                },
-              }}
-              key={index * 0.5}
-              id={field}
-              placeholder={field}
-              label={field}
-              variant="standard"
-              value={searchFieldValues[field]}
-              onChange={handleSearchFieldChange(field)}
-            />
-          </>
-        ))}
         {fkeys !== null && (
           <>
             <p>{Object.keys(fkeys[0])[0]}:</p>

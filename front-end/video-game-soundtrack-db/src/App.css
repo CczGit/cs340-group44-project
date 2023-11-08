@@ -29,11 +29,9 @@ body {
   align-items: flex-end;
   padding: 2%;
   margin: 2% auto;
-  background-color: #0000001d;
   min-width: 47%;
   max-width: 80%;
   border-radius: 5px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
 }
 
@@ -56,7 +54,13 @@ td {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+.BoxWrapper {
+  padding: 10px;
+  margin-inline: 2.5%;
+  border-radius: 50px;
+  box-shadow: 0px 0px 10px 10px #0000002d;
+  align-items: center;
+}
 nav {
   display: flex;
   min-width: 50vw;

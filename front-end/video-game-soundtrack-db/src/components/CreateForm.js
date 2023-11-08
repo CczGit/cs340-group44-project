@@ -58,6 +58,7 @@ export default function CreateForm({
               sx={{
                 "& > :not(style)": {
                   color: "aliceblue",
+                  fontSize: "large",
                 },
               }}
               key={index ** 0.14}
