@@ -60,6 +60,7 @@ td {
   border-radius: 50px;
   box-shadow: 0px 0px 10px 10px #0000002d;
   align-items: center;
+  background-color: #0000001d;
 }
 nav {
   display: flex;
