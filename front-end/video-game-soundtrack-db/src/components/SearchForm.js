@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { TextField, Box, Button, Select, MenuItem } from "@mui/material";
 
-export default function SearchForm({ fields, onClose, data, fkeys }) {
-  const idVar = Object.keys(data[0])[0];
-  const nameVar = Object.keys(data[0])[1];
-  const fkeyVar = Object.keys(data[0])[2];
+export default function SearchForm({
+  fields,
+  onClose,
+  data,
+  fkeys,
+  idVar,
+  nameVar,
+  fkeyVar,
+}) {
   const [filteredData, setFilteredData] = useState(null);
   const [selectedValue, setSelectedValue] = useState(data[0][idVar]);
   const [searchFieldValues, setSearchFieldValues] = useState(() => {
@@ -12,7 +17,7 @@ export default function SearchForm({ fields, onClose, data, fkeys }) {
     fields.forEach((field) => (initialValues[field] = data[0][field]));
     return initialValues;
   });
-  const [fkey, setFkey] = useState("");
+  const [fkey, setFkey] = useState(0);
   const handleSearchFieldChange = (field) => (event) => {
     setSearchFieldValues((prev) => ({ ...prev, [field]: event.target.value }));
   };

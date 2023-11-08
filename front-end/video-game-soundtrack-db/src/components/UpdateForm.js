@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { TextField, Box, Button, Select, MenuItem } from "@mui/material";
 
-export default function UpdateForm({ data, fields, onClose, fkeys }) {
-  const idVar = Object.keys(data[0])[0];
-  const nameVar = Object.keys(data[0])[1];
-  const fkeyVar = Object.keys(data[0])[2];
+export default function UpdateForm({
+  data,
+  fields,
+  onClose,
+  fkeys,
+  idVar,
+  nameVar,
+  fkeyVar,
+}) {
   const [currValue, setCurrValue] = useState(data[0][idVar]);
 
   const [updateFieldValues, setUpdateFieldValues] = useState(() => {

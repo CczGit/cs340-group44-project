@@ -10,7 +10,9 @@ export default function InputForm({ data, tableName, fields, fkeys }) {
   const [create, setCreate] = useState(false);
   const [update, setUpdate] = useState(false);
   const [search, setSearch] = useState(false);
-
+  const idVar = Object.keys(data[0])[0];
+  const nameVar = Object.keys(data[0])[1];
+  const fkeyVar = Object.keys(data[0])[2];
   const createHandler = () => {
     setCreate(!create);
   };
@@ -26,7 +28,14 @@ export default function InputForm({ data, tableName, fields, fkeys }) {
       {(create || update || search) && (
         <div className="formContainer">
           {create && (
-            <CreateForm fields={fields} fkeys={fkeys} onClose={createHandler} />
+            <CreateForm
+              fkeys={fkeys}
+              idVar={idVar}
+              fkeyVar={fkeyVar}
+              nameVar={nameVar}
+              fields={fields}
+              onClose={createHandler}
+            />
           )}
           {update && (
             <UpdateForm
@@ -34,6 +43,9 @@ export default function InputForm({ data, tableName, fields, fkeys }) {
               data={data}
               onClose={updateHandler}
               fkeys={fkeys}
+              idVar={idVar}
+              fkeyVar={fkeyVar}
+              nameVar={nameVar}
             />
           )}
           {search && (
@@ -42,6 +54,9 @@ export default function InputForm({ data, tableName, fields, fkeys }) {
               onClose={searchHandler}
               data={data}
               fkeys={fkeys}
+              idVar={idVar}
+              nameVar={nameVar}
+              fkeyVar={fkeyVar}
             />
           )}
         </div>

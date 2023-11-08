@@ -3,7 +3,14 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button, Select, MenuItem } from "@mui/material";
 
-export default function CreateForm({ fields, fkeys, onClose }) {
+export default function CreateForm({
+  fields,
+  fkeys,
+  onClose,
+  idVar,
+  nameVar,
+  fkeyVar,
+}) {
   const firstKey = "";
   if (fkeys) {
     const firstKey = Object.values(fkeys[0])[0];

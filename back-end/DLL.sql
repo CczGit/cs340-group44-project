@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS `Developers` ;
 
 CREATE TABLE IF NOT EXISTS `Developers` (
   `idDeveloper` INT NOT NULL AUTO_INCREMENT,
-  `devName` VARCHAR(45) NULL,
+  `devName` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idDeveloper`))
 ENGINE = InnoDB;
 
@@ -28,8 +28,8 @@ DROP TABLE IF EXISTS `Games` ;
 
 CREATE TABLE IF NOT EXISTS `Games` (
   `idGame` INT NOT NULL AUTO_INCREMENT,
-  `gameName` VARCHAR(45) NULL,
-  `idDeveloper` INT NOT NULL,
+  `gameName` VARCHAR(45) NOT NULL,
+  `idDeveloper` INT NULL,
   PRIMARY KEY (`idGame`),
   INDEX `fk_Games_Developers1_idx` (`idDeveloper` ASC) VISIBLE,
   CONSTRAINT `fk_Games_Developers1`
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `Songs` (
   `idSong` INT NOT NULL AUTO_INCREMENT,
   `songName` VARCHAR(45) NOT NULL,
   `spotifyPlayCount` INT NULL,
-  `idGame` INT NOT NULL,
+  `idGame` INT NULL,
   PRIMARY KEY (`idSong`),
   INDEX `fk_Songs_Games1_idx` (`idGame` ASC) VISIBLE,
   CONSTRAINT `fk_Songs_Games1`
