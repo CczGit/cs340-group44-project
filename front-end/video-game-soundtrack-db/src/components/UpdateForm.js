@@ -55,12 +55,12 @@ export default function UpdateForm({ data, fields, onClose, fkeys }) {
         noValidate
         autoComplete="off"
       >
+        <p>{Object.keys(data[0])[0]}:</p>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={currValue}
           label="ID"
-          helperText="ID"
           onChange={handleSelectChange}
         >
           {data.map((datum, index) => (
@@ -78,7 +78,7 @@ export default function UpdateForm({ data, fields, onClose, fkeys }) {
                   color: "aliceblue",
                 },
               }}
-              key={index}
+              key={index ** 0.0035}
               id={field}
               label={field}
               variant="standard"
@@ -94,12 +94,14 @@ export default function UpdateForm({ data, fields, onClose, fkeys }) {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               label="Developer"
-              helperText="Developer"
               onChange={handleFKChange}
               value={fkey}
             >
               {fkeys.map((fkey, index) => (
-                <MenuItem key={index} value={fkey[Object.keys(fkey)[0]]}>
+                <MenuItem
+                  key={index * 0.005}
+                  value={fkey[Object.keys(fkey)[0]]}
+                >
                   {`${fkey[Object.keys(fkey)[0]]}: ${
                     fkey[Object.keys(fkey)[1]]
                   }`}

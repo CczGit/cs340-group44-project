@@ -38,20 +38,26 @@ export default function PageBody({ tableName }) {
         );
         setFkeys(
           removeFKeyDuplicates(
-            data.map((datum) => ({
-              "Developer ID": datum["Developer ID"],
-              "Developer Name": datum["Developer Name"],
-            }))
+            [
+              { "Developer ID": 0, "Developer Name": "Select Developer" },
+            ].concat(
+              data.map((datum) => ({
+                "Developer ID": datum["Developer ID"],
+                "Developer Name": datum["Developer Name"],
+              }))
+            )
           )
         );
       } else if (tableName === "Songs") {
         setFields(Object.keys(data[0]).slice(1, 2));
         setFkeys(
-          removeFKeyDuplicates(
-            data.map((datum) => ({
-              "Game ID": datum["Game ID"],
-              "Game Name": datum["Game Name"],
-            }))
+          [{ "Game ID": 0, "Game Name": "Select Game" }].concat(
+            removeFKeyDuplicates(
+              data.map((datum) => ({
+                "Game ID": datum["Game ID"],
+                "Game Name": datum["Game Name"],
+              }))
+            )
           )
         );
       }

@@ -4,6 +4,10 @@ import TextField from "@mui/material/TextField";
 import { Button, Select, MenuItem } from "@mui/material";
 
 export default function CreateForm({ fields, fkeys, onClose }) {
+  const firstKey = "";
+  if (fkeys) {
+    const firstKey = Object.values(fkeys[0])[0];
+  }
   const [createFieldValues, setCreateFieldValues] = useState(() => {
     const initialFieldValues = {};
     fields.forEach((field) => {
@@ -20,7 +24,7 @@ export default function CreateForm({ fields, fkeys, onClose }) {
   const handleSubmit = () => {
     onClose();
   };
-  const [fkey, setFkey] = useState(Object.values(fkeys[0])[0]);
+  const [fkey, setFkey] = useState(firstKey);
   const handleFKChange = (e) => {
     setFkey(e.target.value);
   };
@@ -49,7 +53,7 @@ export default function CreateForm({ fields, fkeys, onClose }) {
                   color: "aliceblue",
                 },
               }}
-              key={index * 0.25}
+              key={index ** 0.14}
               id={field}
               label={field}
               variant="standard"
@@ -68,7 +72,10 @@ export default function CreateForm({ fields, fkeys, onClose }) {
               value={fkey}
             >
               {fkeys.map((fkey, index) => (
-                <MenuItem key={index * 0.15} value={fkey[Object.keys(fkey)[0]]}>
+                <MenuItem
+                  key={index ** 0.347}
+                  value={fkey[Object.keys(fkey)[0]]}
+                >
                   {`${fkey[Object.keys(fkey)[0]]}: ${
                     fkey[Object.keys(fkey)[1]]
                   }`}

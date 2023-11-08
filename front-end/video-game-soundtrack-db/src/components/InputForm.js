@@ -36,7 +36,14 @@ export default function InputForm({ data, tableName, fields, fkeys }) {
               fkeys={fkeys}
             />
           )}
-          {search && <SearchForm fields={fields} onClose={searchHandler} />}
+          {search && (
+            <SearchForm
+              fields={fields}
+              onClose={searchHandler}
+              data={data}
+              fkeys={fkeys}
+            />
+          )}
         </div>
       )}
       <ButtonGroup
