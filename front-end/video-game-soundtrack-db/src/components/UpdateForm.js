@@ -4,6 +4,7 @@ import { TextField, Box, Button, Select, MenuItem } from "@mui/material";
 export default function UpdateForm({ data, fields, onClose, fkeys }) {
   const idVar = Object.keys(data[0])[0];
   const nameVar = Object.keys(data[0])[1];
+  const fkeyVar = Object.keys(data[0])[2];
   const [currValue, setCurrValue] = useState(data[0][idVar]);
 
   const [updateFieldValues, setUpdateFieldValues] = useState(() => {
@@ -33,7 +34,7 @@ export default function UpdateForm({ data, fields, onClose, fkeys }) {
   const handleSubmit = () => {
     onClose();
   };
-  const [fkey, setFkey] = useState(null);
+  const [fkey, setFkey] = useState(data[0][fkeyVar]);
   const handleFKChange = (e) => {
     setFkey(e.target.value);
   };

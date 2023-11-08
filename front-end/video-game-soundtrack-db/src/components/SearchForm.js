@@ -41,7 +41,7 @@ export default function SearchComponent({ fields, onClose }) {
                   color: "aliceblue",
                 },
               }}
-              key={index}
+              key={index * 0.15}
               id={field}
               placeholder={field}
               label={field}
