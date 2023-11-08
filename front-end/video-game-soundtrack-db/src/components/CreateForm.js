@@ -60,6 +60,7 @@ export default function CreateForm({
                   color: "aliceblue",
                   fontSize: "large",
                 },
+                "& .MuiInputBase-input": { textAlign: "center" },
               }}
               key={index ** 0.14}
               id={field}

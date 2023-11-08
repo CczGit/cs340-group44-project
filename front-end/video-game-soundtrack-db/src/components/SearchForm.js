@@ -76,6 +76,7 @@ export default function SearchForm({
                   color: "aliceblue",
                   fontSize: "large",
                 },
+                "& .MuiInputBase-input": { textAlign: "center" },
               }}
               key={index * 0.5}
               id={field}

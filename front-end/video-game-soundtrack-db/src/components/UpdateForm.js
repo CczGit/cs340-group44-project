@@ -64,9 +64,10 @@ export default function UpdateForm({
               sx={{
                 "& > :not(style)": {
                   color: "aliceblue",
-                  textAlign: "center",
+
                   fontSize: "large",
                 },
+                "& .MuiInputBase-input": { textAlign: "center" },
               }}
               key={index ** 0.0035}
               id={field}
@@ -77,6 +78,7 @@ export default function UpdateForm({
             />
           </div>
         ))}
+
         <p>{Object.keys(data[0])[0]}:</p>
         <Select
           labelId="demo-simple-select-label"
