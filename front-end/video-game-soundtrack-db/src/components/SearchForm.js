@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Box, Button, InputLabel } from "@mui/material";
+import { TextField, Box, Button } from "@mui/material";
 
 export default function SearchComponent({ fields, onClose }) {
   const [searchFieldValues, setSearchFieldValues] = useState(() => {

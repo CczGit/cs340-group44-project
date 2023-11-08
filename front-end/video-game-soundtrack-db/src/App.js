@@ -1,10 +1,5 @@
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useParams,
-} from "react-router-dom";
+import { Routes, Route, useParams, HashRouter } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import PageBody from "./components/PageBody";
 import HomePage from "./components/Homepage";
@@ -18,7 +13,7 @@ function PageBodyWrapper() {
 export default function App() {
   return (
     <div className="App">
-      <Router>
+      <HashRouter>
         <header>
           <Navigation />
         </header>
@@ -29,7 +24,7 @@ export default function App() {
           </Routes>
         </div>
         <footer>© 2023 Rafael Cruz, Carleton Foster</footer>
-      </Router>
+      </HashRouter>
     </div>
   );
 }

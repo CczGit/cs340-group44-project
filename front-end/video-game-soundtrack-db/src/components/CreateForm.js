@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import {
-  Button,
-  ButtonGroup,
-  Select,
-  MenuItem,
-  InputLabel,
-} from "@mui/material";
+import { Button, Select, MenuItem } from "@mui/material";
 
 export default function CreateForm({ fields, fkeys, onClose }) {
   const [createFieldValues, setCreateFieldValues] = useState(() => {
@@ -26,7 +20,7 @@ export default function CreateForm({ fields, fkeys, onClose }) {
   const handleSubmit = () => {
     onClose();
   };
-  const [fkey, setFkey] = useState(null);
+  const [fkey, setFkey] = useState(Object.values(fkeys[0])[0]);
   const handleFKChange = (e) => {
     setFkey(e.target.value);
   };
@@ -55,7 +49,7 @@ export default function CreateForm({ fields, fkeys, onClose }) {
                   color: "aliceblue",
                 },
               }}
-              key={index}
+              key={index * 0.25}
               id={field}
               label={field}
               variant="standard"
@@ -74,7 +68,7 @@ export default function CreateForm({ fields, fkeys, onClose }) {
               value={fkey}
             >
               {fkeys.map((fkey, index) => (
-                <MenuItem key={index} value={fkey[Object.keys(fkey)[0]]}>
+                <MenuItem key={index * 0.15} value={fkey[Object.keys(fkey)[0]]}>
                   {`${fkey[Object.keys(fkey)[0]]}: ${
                     fkey[Object.keys(fkey)[1]]
                   }`}

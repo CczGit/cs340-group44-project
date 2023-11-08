@@ -21,51 +21,56 @@ export default function HomePage() {
       <br />
       <br />
       <table>
-        <tr>
-          <th>Table Name</th>
-          <th>Description</th>
-        </tr>
-        <tr>
-          <td>Developers</td>
-          <td>An entity that contains data about video game developers.</td>
-        </tr>
-        <tr>
-          <td>Composers</td>
-          <td>
-            An entity that contains data about video game soundtrack composers.
-          </td>
-        </tr>
-        <tr>
-          <td>Composers_Songs</td>
-          <td>
-            An intersection table that supports the M:N relationship between
-            Composers and Songs.
-          </td>
-        </tr>
-        <tr>
-          <td>Composers_Developers</td>
-          <td>
-            An intersection table that supports the M:N relationship between
-            Composers and Developrs
-          </td>
-        </tr>
-        <tr>
-          <td>Games</td>
-          <td>An entity that contains data about video games.</td>
-        </tr>
-        <tr>
-          <td>Games_Composers</td>
-          <td>
-            An intersection table that supports the M:N relationship between
-            Games and Composers
-          </td>
-        </tr>
-        <tr>
-          <td>Songs</td>
-          <td>
-            An entity that contains data about video game soundtrack songs.
-          </td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Table Name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Developers</td>
+            <td>An entity that contains data about video game developers.</td>
+          </tr>
+          <tr>
+            <td>Composers</td>
+            <td>
+              An entity that contains data about video game soundtrack
+              composers.
+            </td>
+          </tr>
+          <tr>
+            <td>Composers_Songs</td>
+            <td>
+              An intersection table that supports the M:N relationship between
+              Composers and Songs.
+            </td>
+          </tr>
+          <tr>
+            <td>Composers_Developers</td>
+            <td>
+              An intersection table that supports the M:N relationship between
+              Composers and Developrs
+            </td>
+          </tr>
+          <tr>
+            <td>Games</td>
+            <td>An entity that contains data about video games.</td>
+          </tr>
+          <tr>
+            <td>Games_Composers</td>
+            <td>
+              An intersection table that supports the M:N relationship between
+              Games and Composers
+            </td>
+          </tr>
+          <tr>
+            <td>Songs</td>
+            <td>
+              An entity that contains data about video game soundtrack songs.
+            </td>
+          </tr>
+        </tbody>
       </table>
     </>
   );
