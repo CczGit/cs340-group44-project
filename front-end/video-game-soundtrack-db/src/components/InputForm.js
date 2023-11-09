@@ -10,12 +10,14 @@ export default function InputForm({
   fields,
   fkeys,
   intersectData,
+  setData,
 }) {
   // if id in fields -> get list of ids to values
   // use drop downs for ids
   const [create, setCreate] = useState(false);
   const [update, setUpdate] = useState(false);
   const [search, setSearch] = useState(false);
+  const [oldData, setOldData] = useState(null);
   const idVar = Object.keys(data[0])[0];
   const nameVar = Object.keys(data[0])[1];
   const fkeyVar = Object.keys(data[0])[2];
@@ -28,6 +30,10 @@ export default function InputForm({
   };
   const searchHandler = () => {
     setSearch(!search);
+  };
+  const resetHandler = () => {
+    setData(oldData);
+    setOldData(null);
   };
   if (data !== null) {
     return (
@@ -71,6 +77,8 @@ export default function InputForm({
                 fkeyVar={fkeyVar}
                 intersectData={intersectData}
                 tableName={tableName}
+                setData={setData}
+                setOldData={setOldData}
               />
             )}
           </div>
@@ -81,7 +89,10 @@ export default function InputForm({
         >
           {!create && <Button onClick={createHandler}>CREATE</Button>}
           {!update && <Button onClick={updateHandler}>UPDATE</Button>}
-          {!search && <Button onClick={searchHandler}>SEARCH</Button>}
+          {!search && !oldData && (
+            <Button onClick={searchHandler}>SEARCH</Button>
+          )}
+          {oldData && <Button onClick={resetHandler}>RESET TABLE</Button>}
         </ButtonGroup>
       </>
     );

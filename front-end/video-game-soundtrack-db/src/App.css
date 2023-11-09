@@ -89,6 +89,10 @@ a {
   color: white;
 }
 
+#alert-dialog-description,
+#ok {
+  color: aliceblue;
+}
 .tableContainer {
   display: flex;
   justify-content: center;

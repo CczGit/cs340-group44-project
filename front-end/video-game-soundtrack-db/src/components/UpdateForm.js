@@ -159,7 +159,7 @@ export default function UpdateForm({
                   <>
                     <p>{field}:</p>
                     <Select
-                      key={fieldIndex}
+                      key={fieldIndex ** 0.47}
                       labelId={`select-${field}-label`}
                       id={`select-${field}`}
                       value={updateFieldValues[field]}
