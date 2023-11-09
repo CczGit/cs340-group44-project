@@ -12,6 +12,7 @@ export default function CreateForm({
   data,
   setData,
 }) {
+  console.log(fields);
   let firstKey = "";
   if (fkeys) {
     firstKey = Object.values(fkeys[0])[0];

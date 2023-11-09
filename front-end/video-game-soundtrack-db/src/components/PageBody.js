@@ -57,7 +57,9 @@ export default function PageBody({ tableName }) {
           )
         );
       } else if (tableName === "Songs") {
-        setFields(Object.keys(data[0]).slice(1, 2));
+        setFields(
+          Object.keys(data[0]).slice(1, 2).concat(Object.keys(data[0]).slice(4))
+        );
         setFkeys(
           [{ "Game ID": 0, "Game Name": "NULL" }].concat(
             removeFKeyDuplicates(

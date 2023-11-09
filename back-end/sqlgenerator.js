@@ -1,44 +1,45 @@
-const fs = require("fs");
-
-function generateDevelopersSQL(developers) {
-  // Convert the developers array to a string of SQL insert statements for the Games table
-  return developers
-    .map((developer) => {
-      return `INSERT INTO Developers (devName) VALUES ('${developer.name}');`;
-    })
-    .join("\n");
+export default function SQLGenerator(data, tableName, operation) {
+  switch (tableName) {
+    case "Songs":
+      switch (operation) {
+        case "Create":
+          return `INSERT INTO SONGS (songName, ${
+            data[0]["Spotify Plays"] !== "" && "spotifyPlayCount"
+          } ${data[1] !== 0 && " idGame"}) VALUES ${data[0]["Song Name"]}, ${
+            data[0]["Spotify Plays"] !== "" && data[0]["Spotify Plays"]
+          } ${data[1] !== 0 && " idGame"}`;
+        case "Update":
+          return `UPDATE SONGS SET songName = ${data[0]["Song Name"]}, spotifyPlayCount = ${data[0]["Spotify Plays"]}, idGame = ${data[0]["Game ID"]}  WHERE idSong = ${data[0]["Song ID"]}`;
+      }
+    case "Games":
+      switch (operation) {
+        case "Create":
+        case "Update":
+      }
+    case "Composers":
+      switch (operation) {
+        case "Create":
+        case "Update":
+      }
+    case "Developers":
+      switch (operation) {
+        case "Create":
+        case "Update":
+      }
+    case "Composers_Songs":
+      switch (operation) {
+        case "Create":
+        case "Update":
+      }
+    case "Composers_Developers":
+      switch (operation) {
+        case "Create":
+        case "Update":
+      }
+    case "Games_Composers":
+      switch (operation) {
+        case "Create":
+        case "Update":
+      }
+  }
 }
-
-function generateGamesSQL(games) {
-  // Convert the games array to a string of SQL insert statements for the Songs table
-  return games
-    .map((game) => {
-      return `INSERT INTO Games (gameName, idDeveloper) VALUES ('${game.name}', ${game.developerID});`;
-    })
-    .join("\n");
-}
-
-function generateSongsSQL(songs) {
-  // Convert the songs array to a string of SQL insert statements for the Songs table
-  return songs
-    .map((song) => {
-      return `INSERT INTO Songs (songName, songSpotifyPopularity, idGame) VALUES ('${song.name}', ${song.popularity}, ${song.gameID}});`;
-    })
-    .join("\n");
-}
-
-function generateComposersSQL(composers) {
-  // Convert the composers array to a string of SQL insert statements for the Songs table
-  return composers
-    .map((composer) => {
-      return `INSERT INTO Composers (composerFName, composerLName, composerSpotifyPopularity) VALUES ('${composer.fname}', ${composer.lname}, ${composer.popularity}});`;
-    })
-    .join("\n");
-}
-
-exports = {
-  developers: generateDevelopersSQL,
-  songs: generateSongsSQL,
-  games: generateGamesSQL,
-  composers: generateComposersSQL,
-};

@@ -4,6 +4,7 @@
 
 // Express
 var express = require("express");
+const SQLGenerator = require("./sqlgenerator");
 var app = express();
 PORT = 3000;
 
@@ -40,6 +41,14 @@ var db = require("./database/db-connector");
 //     });
 //   });
 // });
+
+app.post("/:tableName", function (req, res) {
+  var tableName = req.params.tableName;
+  var data = req.body.data;
+  var operation = req.body.operation;
+  var query1 = SQLGenerator(data, tableName, operation);
+  console.log(query1);
+});
 
 app.get("/:tableName", function (req, res) {
   // Define our queries
