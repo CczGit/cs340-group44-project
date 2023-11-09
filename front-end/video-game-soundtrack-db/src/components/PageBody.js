@@ -4,19 +4,6 @@ import InputForm from "./InputForm";
 import CreateForm from "./CreateForm";
 import { CircularProgress } from "@mui/material";
 
-const removeFKeyDuplicates = (fkeyArray) => {
-  let newFKeyArray = [];
-  let names = [];
-  const keys = Object.keys(fkeyArray[0]);
-  fkeyArray.forEach((key) => {
-    if (!names.includes(key[keys[0]])) {
-      names.push(key[keys[0]]);
-      newFKeyArray.push(key);
-    }
-  });
-  return newFKeyArray;
-};
-
 export default function PageBody({ tableName }) {
   // add search and add buttons
   const [data, setData] = useState(null);
@@ -82,7 +69,6 @@ export default function PageBody({ tableName }) {
       });
       const intersectDecoded = await intersectResponse.json();
       setIntersectData(intersectDecoded);
-      console.log(intersectData, intersectDecoded);
     }
   }, [tableName]);
   useEffect(() => {

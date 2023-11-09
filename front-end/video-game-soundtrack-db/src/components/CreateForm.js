@@ -17,7 +17,6 @@ export default function CreateForm({
   onClose,
   tableName,
   intersectData,
-  data,
   loadData,
   nameVar,
 }) {
@@ -26,6 +25,8 @@ export default function CreateForm({
     firstKey = Object.values(fkeys[0])[0];
   }
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [reload, setReload] = useState(false);
+  const [dialogTitle, setdialogTitle] = useState("");
   const [message, setMessage] = useState("Error");
   const [createFieldValues, setCreateFieldValues] = useState(() => {
     const initialFieldValues = {};
@@ -53,7 +54,7 @@ export default function CreateForm({
       });
       if (result.status === 400) {
         const data = await result.json();
-
+        setdialogTitle("Invalid Request");
         setMessage(
           <>
             <p>Bad request.</p>
@@ -63,9 +64,22 @@ export default function CreateForm({
         );
         setDialogOpen(true);
       } else {
-        console.log("added successfully");
-        onClose();
-        loadData();
+        setdialogTitle("Success!!");
+        setMessage(
+          <>
+            <p>Succesfully inserted into {tableName} table with values:</p>
+            {Object.keys(createFieldValues).map((field) => (
+              <p>
+                {field}:{createFieldValues[field]}
+              </p>
+            ))}
+            <p>
+              {Object.keys(fkeys[0])[0]}:{fkey}
+            </p>
+          </>
+        );
+        setDialogOpen(true);
+        setReload(true);
       }
     }
   };
@@ -79,6 +93,9 @@ export default function CreateForm({
         dialogOpen={dialogOpen}
         setDialogOpen={setDialogOpen}
         message={message}
+        dialogTitle={dialogTitle}
+        loadData={loadData}
+        reload={reload}
       />
     );
   } else if (!tableName.includes("_")) {

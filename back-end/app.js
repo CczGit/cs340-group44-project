@@ -58,7 +58,7 @@ app.post("/:tableName", function (req, res) {
       res.status(400).send(JSON.stringify({ Error: err }));
     } else {
       res.setHeader("Content-Type", "application/json");
-      res.status(201).send(results);
+      res.status(200).send(results);
     }
   });
 });
@@ -104,7 +104,7 @@ app.get("/intersectkeys/:tableName", function (req, res) {
       break;
     case "Composers_Songs":
       var query1 =
-        "SELECT idSong as 'Song ID', songName as 'Song Name', FROM Songs;";
+        "SELECT idSong as 'Song ID', songName as 'Song Name' FROM Songs;";
       break;
     case "Composers_Developers":
       var query1 =
@@ -114,6 +114,7 @@ app.get("/intersectkeys/:tableName", function (req, res) {
   console.log(`TableName: ${tableName} Query: ${query1}`);
   db.pool.query(query1, function (err, results, fields) {
     if (err) {
+      res.status(400).send(JSON.stringify(err));
     } else {
       res.status(200).send(JSON.stringify(results));
     }

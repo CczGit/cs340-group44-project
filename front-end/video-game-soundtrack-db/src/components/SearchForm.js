@@ -18,7 +18,6 @@ export default function SearchForm({
 }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [filteredData, setFilteredData] = useState(null);
-  const [selectedValue, setSelectedValue] = useState(data[0][idVar]);
   const [searchFieldValues, setSearchFieldValues] = useState(() => {
     const initialValues = {};
     Object.keys(data[0]).forEach(

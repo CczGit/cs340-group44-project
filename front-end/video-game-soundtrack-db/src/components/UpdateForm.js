@@ -15,6 +15,8 @@ export default function UpdateForm({
   intersectData,
   loadData,
 }) {
+  const [reload, setReload] = useState(false);
+  const [dialogTitle, setdialogTitle] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [message, setMessage] = useState("Error");
   const [currValue, setCurrValue] = useState(data[0][idVar]);
@@ -49,14 +51,13 @@ export default function UpdateForm({
       setMessage(`Invalid request. ${nameVar} is required`);
       setDialogOpen(true);
     } else {
-      onClose();
       const request = [updateFieldValues, fkey, "UPDATE", currValue];
       const result = await fetch(`./${tableName}`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(request),
       });
-      if (result.status !== 400) {
+      if (result.status === 400) {
         const data = await result.json();
 
         setMessage(
@@ -66,6 +67,23 @@ export default function UpdateForm({
             <p> Query: ${data.Error.sql}</p>
           </>
         );
+        setDialogOpen(true);
+      } else {
+        setdialogTitle("Success!!");
+        setMessage(
+          <>
+            <p>Succesfully updated {tableName} table with values:</p>
+            {Object.keys(updateFieldValues).map((field) => (
+              <p>
+                {field}:{updateFieldValues[field]}
+              </p>
+            ))}
+            <p>
+              {Object.keys(fkeys[0])[0]}:{fkey}
+            </p>
+          </>
+        );
+        setReload(true);
         setDialogOpen(true);
       }
     }
@@ -80,6 +98,9 @@ export default function UpdateForm({
         dialogOpen={dialogOpen}
         setDialogOpen={setDialogOpen}
         message={message}
+        dialogTitle={dialogTitle}
+        loadData={loadData}
+        reload={reload}
       />
     );
   } else if (!tableName.includes("_")) {

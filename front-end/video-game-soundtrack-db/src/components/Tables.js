@@ -24,7 +24,7 @@ export default function Tables({ data, setData, tableName }) {
         headers: { "content-type": "application/json" },
         body: JSON.stringify(request),
       });
-      if (result.status != 400) {
+      if (result.status !== 400) {
         if (data.length > 1) {
           setData(data.filter((_, index) => index !== +e.target.value));
         } else {

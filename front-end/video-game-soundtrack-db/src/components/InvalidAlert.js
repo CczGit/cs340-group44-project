@@ -11,9 +11,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function NotFoundAlert({ dialogOpen, setDialogOpen, message }) {
+export default function NotFoundAlert({
+  dialogOpen,
+  setDialogOpen,
+  message,
+  dialogTitle,
+  loadData,
+  reload,
+}) {
   const handleClose = () => {
     setDialogOpen(false);
+    if (reload) {
+      loadData();
+    }
   };
 
   return (
@@ -34,7 +44,7 @@ export default function NotFoundAlert({ dialogOpen, setDialogOpen, message }) {
           background: "#000000d5",
         }}
       >
-        <DialogTitle id="alert-dialog-title">{"Invalid Request"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{dialogTitle}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {message}

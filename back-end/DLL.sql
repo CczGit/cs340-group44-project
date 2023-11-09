@@ -79,8 +79,7 @@ CREATE TABLE IF NOT EXISTS `Songs` (
   CONSTRAINT `fk_Songs_Games1`
     FOREIGN KEY (`idGame`)
     REFERENCES `Games` (`idGame`)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE)
+    ON DELETE SET NULL)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -102,13 +101,12 @@ CREATE TABLE IF NOT EXISTS `Composers_Developers` (
   CONSTRAINT `fk_Composers_Developers_Composers1`
     FOREIGN KEY (`idComposer`)
     REFERENCES `Composers` (`idComposer`)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE,
+    ON DELETE SET NULL,
   CONSTRAINT `fk_Composers_Developers_Developers1`
     FOREIGN KEY (`idDeveloper`)
     REFERENCES `Developers` (`idDeveloper`)
     ON DELETE SET NULL
-    ON UPDATE CASCADE)
+    )
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -130,13 +128,12 @@ CREATE TABLE IF NOT EXISTS `Games_Composers` (
   CONSTRAINT `fk_Games_Composers_Games1`
     FOREIGN KEY (`idGame`)
     REFERENCES `Games` (`idGame`)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE,
+    ON DELETE SET NULL,
   CONSTRAINT `fk_Games_Composers_Composers1`
     FOREIGN KEY (`idComposer`)
     REFERENCES `Composers` (`idComposer`)
     ON DELETE SET NULL
-    ON UPDATE CASCADE)
+    )
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -158,13 +155,12 @@ CREATE TABLE IF NOT EXISTS `Composers_Songs` (
   CONSTRAINT `fk_Composers_Songs_Composers1`
     FOREIGN KEY (`idComposer`)
     REFERENCES `Composers` (`idComposer`)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE,
+    ON DELETE SET NULL,
   CONSTRAINT `fk_Composers_Songs_Songs1`
     FOREIGN KEY (`idSong`)
     REFERENCES `Songs` (`idSong`)
     ON DELETE SET NULL
-    ON UPDATE CASCADE)
+    )
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
