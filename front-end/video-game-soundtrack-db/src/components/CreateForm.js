@@ -12,7 +12,6 @@ export default function CreateForm({
   data,
   setData,
 }) {
-  console.log(fields);
   let firstKey = "";
   if (fkeys) {
     firstKey = Object.values(fkeys[0])[0];
@@ -30,9 +29,15 @@ export default function CreateForm({
       [field]: event.target.value,
     }));
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     onClose();
-    console.log(createFieldValues, fkey);
+    const request = [createFieldValues, fkey, "CREATE"];
+    const result = await fetch(`./${tableName}`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(request),
+    });
+    console.log(result);
   };
   const [fkey, setFkey] = useState(firstKey);
   const handleFKChange = (e) => {
@@ -64,6 +69,12 @@ export default function CreateForm({
                   },
                   "& .MuiInputBase-input": { textAlign: "center" },
                 }}
+                required={[
+                  "Song Name",
+                  "Composer Name",
+                  "Game Name",
+                  "Developer Name",
+                ].includes(field)}
                 key={index ** 0.14}
                 id={field}
                 label={field}

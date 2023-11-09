@@ -6,6 +6,7 @@
 var express = require("express");
 const SQLGenerator = require("./sqlgenerator");
 var app = express();
+app.use(express.json());
 PORT = 3000;
 
 // Database
@@ -43,11 +44,14 @@ var db = require("./database/db-connector");
 // });
 
 app.post("/:tableName", function (req, res) {
+  console.log(req.body);
   var tableName = req.params.tableName;
-  var data = req.body.data;
-  var operation = req.body.operation;
+  var data = [req.body[0], req.body[1]];
+  var operation = req.body[2];
+  console.log(data, operation, tableName);
   var query1 = SQLGenerator(data, tableName, operation);
   console.log(query1);
+  res.send(JSON.stringify(query1));
 });
 
 app.get("/:tableName", function (req, res) {
