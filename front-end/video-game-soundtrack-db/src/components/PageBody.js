@@ -79,7 +79,6 @@ export default function PageBody({ tableName }) {
     loadData();
   }, [tableName, loadData]);
   if (data && fields) {
-    console.log(data);
     return (
       <>
         <h1>{tableName}</h1>

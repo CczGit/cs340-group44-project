@@ -9,6 +9,7 @@ import {
   Grid,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import InvalidAlert from "./InvalidAlert";
 
 export default function CreateForm({
   fields,
@@ -18,11 +19,14 @@ export default function CreateForm({
   intersectData,
   data,
   loadData,
+  nameVar,
 }) {
   let firstKey = "";
   if (fkeys) {
     firstKey = Object.values(fkeys[0])[0];
   }
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [message, setMessage] = useState("Error");
   const [createFieldValues, setCreateFieldValues] = useState(() => {
     const initialFieldValues = {};
     fields.forEach((field) => {
@@ -37,26 +41,39 @@ export default function CreateForm({
     }));
   };
   const handleSubmit = async (e) => {
-    onClose();
-    const request = [createFieldValues, fkey, "CREATE"];
-    const result = await fetch(`./${tableName}`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(request),
-    });
-    if (result.status === 400) {
-      const data = await result.json();
-      console.log(data);
+    if (createFieldValues[nameVar] === "") {
+      setMessage(`Invalid request. ${nameVar} is required`);
+      setDialogOpen(true);
     } else {
-      console.log("added successfully");
-      loadData();
+      onClose();
+      const request = [createFieldValues, fkey, "CREATE"];
+      const result = await fetch(`./${tableName}`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(request),
+      });
+      if (result.status === 400) {
+        const data = await result.json();
+        console.log(data);
+      } else {
+        console.log("added successfully");
+        loadData();
+      }
     }
   };
   const [fkey, setFkey] = useState(firstKey);
   const handleFKChange = (e) => {
     setFkey(e.target.value);
   };
-  if (!tableName.includes("_")) {
+  if (dialogOpen) {
+    return (
+      <InvalidAlert
+        dialogOpen={dialogOpen}
+        setDialogOpen={setDialogOpen}
+        message={message}
+      />
+    );
+  } else if (!tableName.includes("_")) {
     return (
       <div className="BoxWrapper">
         <Grid

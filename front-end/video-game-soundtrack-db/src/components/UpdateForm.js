@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { TextField, Box, Button, Select, MenuItem, Grid } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import InvalidAlert from "./InvalidAlert";
 
 export default function UpdateForm({
   data,
@@ -14,8 +15,9 @@ export default function UpdateForm({
   intersectData,
   loadData,
 }) {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [message, setMessage] = useState("Error");
   const [currValue, setCurrValue] = useState(data[0][idVar]);
-
   const [updateFieldValues, setUpdateFieldValues] = useState(() => {
     const initialFieldValues = {};
     fields.forEach((field) => {
@@ -43,23 +45,35 @@ export default function UpdateForm({
   };
 
   const handleSubmit = async () => {
-    onClose();
-    const request = [updateFieldValues, fkey, "UPDATE", currValue];
-    console.log(updateFieldValues);
-    const result = await fetch(`./${tableName}`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(request),
-    });
-    if (result.status !== 400) {
-      loadData();
+    if (updateFieldValues[nameVar] === "") {
+      setMessage(`Invalid request. ${nameVar} is required`);
+      setDialogOpen(true);
+    } else {
+      onClose();
+      const request = [updateFieldValues, fkey, "UPDATE", currValue];
+      const result = await fetch(`./${tableName}`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(request),
+      });
+      if (result.status !== 400) {
+        loadData();
+      }
     }
   };
   const [fkey, setFkey] = useState(data[0][fkeyVar]);
   const handleFKChange = (e) => {
     setFkey(e.target.value);
   };
-  if (!tableName.includes("_")) {
+  if (dialogOpen) {
+    return (
+      <InvalidAlert
+        dialogOpen={dialogOpen}
+        setDialogOpen={setDialogOpen}
+        message={message}
+      />
+    );
+  } else if (!tableName.includes("_")) {
     return (
       <div className="BoxWrapper">
         <Grid
