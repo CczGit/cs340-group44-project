@@ -10,7 +10,7 @@ export default function CreateForm({
   tableName,
   intersectData,
   data,
-  setData,
+  loadData,
 }) {
   let firstKey = "";
   if (fkeys) {
@@ -37,7 +37,13 @@ export default function CreateForm({
       headers: { "content-type": "application/json" },
       body: JSON.stringify(request),
     });
-    console.log(result);
+    if (result.status === 400) {
+      const data = await result.json();
+      console.log(data);
+    } else {
+      console.log("added successfully");
+      loadData();
+    }
   };
   const [fkey, setFkey] = useState(firstKey);
   const handleFKChange = (e) => {

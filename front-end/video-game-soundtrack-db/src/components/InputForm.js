@@ -11,6 +11,7 @@ export default function InputForm({
   fkeys,
   intersectData,
   setData,
+  loadData,
 }) {
   // if id in fields -> get list of ids to values
   // use drop downs for ids
@@ -51,6 +52,7 @@ export default function InputForm({
                 tableName={tableName}
                 onClose={createHandler}
                 data={data}
+                loadData={loadData}
               />
             )}
             {update && (
@@ -64,6 +66,7 @@ export default function InputForm({
                 nameVar={nameVar}
                 tableName={tableName}
                 intersectData={intersectData}
+                loadData={loadData}
               />
             )}
             {search && (

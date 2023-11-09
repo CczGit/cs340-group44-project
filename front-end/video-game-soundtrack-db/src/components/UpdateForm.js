@@ -11,15 +11,18 @@ export default function UpdateForm({
   fkeyVar,
   tableName,
   intersectData,
-  setData,
+  loadData,
 }) {
   const [currValue, setCurrValue] = useState(data[0][idVar]);
 
   const [updateFieldValues, setUpdateFieldValues] = useState(() => {
     const initialFieldValues = {};
     fields.forEach((field) => {
-      initialFieldValues[field] = data[currValue - 1][field] || "";
+      initialFieldValues[field] = data[0][field] || "";
     });
+    console.log(idVar, data[0], currValue);
+    console.log(data[currValue - 1]);
+    console.log(initialFieldValues);
     return initialFieldValues;
   });
 
@@ -50,7 +53,9 @@ export default function UpdateForm({
       headers: { "content-type": "application/json" },
       body: JSON.stringify(request),
     });
-    console.log(result);
+    if (result.status !== 400) {
+      loadData();
+    }
   };
   const [fkey, setFkey] = useState(data[0][fkeyVar]);
   const handleFKChange = (e) => {

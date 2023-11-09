@@ -14,7 +14,6 @@ export default function Tables({ data, setData, tableName }) {
   if (data) {
     const columns = Object.keys(data[0]);
     const onDelete = async (e) => {
-      console.log(`Delete called on Song:${data[e.target.value][columns[0]]}`);
       const request = [
         data[e.target.value][columns[0]],
         data[e.target.value][columns[2]],
@@ -25,11 +24,12 @@ export default function Tables({ data, setData, tableName }) {
         headers: { "content-type": "application/json" },
         body: JSON.stringify(request),
       });
-      console.log(result);
-      if (data.length > 1) {
-        setData(data.filter((_, index) => index !== +e.target.value));
-      } else {
-        setData(null);
+      if (result.status != 400) {
+        if (data.length > 1) {
+          setData(data.filter((_, index) => index !== +e.target.value));
+        } else {
+          setData(null);
+        }
       }
     };
     return (

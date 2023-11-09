@@ -41,34 +41,33 @@ export default function PageBody({ tableName }) {
         setFields(
           Object.keys(data[0]).slice(1, 2).concat(Object.keys(data[0]).slice(4))
         );
+        const fKeysResponse = await fetch(`./fkeys/${tableName}`, {
+          method: "Get",
+        });
+        const fkeyData = await fKeysResponse.json();
         setFkeys(
-          removeFKeyDuplicates(
-            [
-              {
-                "Developer ID": 0,
-                "Developer Name": "NULL",
-              },
-            ].concat(
-              data.map((datum) => ({
-                "Developer ID": datum["Developer ID"],
-                "Developer Name": datum["Developer Name"],
-              }))
-            )
-          )
+          [
+            {
+              "Developer ID": 0,
+              "Developer Name": "NULL",
+            },
+          ].concat(fkeyData)
         );
       } else if (tableName === "Songs") {
         setFields(
           Object.keys(data[0]).slice(1, 2).concat(Object.keys(data[0]).slice(4))
         );
+        const fKeysResponse = await fetch(`./fkeys/${tableName}`, {
+          method: "Get",
+        });
+        const fkeyData = await fKeysResponse.json();
         setFkeys(
-          [{ "Game ID": 0, "Game Name": "NULL" }].concat(
-            removeFKeyDuplicates(
-              data.map((datum) => ({
-                "Game ID": datum["Game ID"],
-                "Game Name": datum["Game Name"],
-              }))
-            )
-          )
+          [
+            {
+              "Game ID": 0,
+              "Game Name": "NULL",
+            },
+          ].concat(fkeyData)
         );
       }
     } else {
@@ -80,12 +79,18 @@ export default function PageBody({ tableName }) {
     loadData();
   }, [tableName, loadData]);
   if (data && fields) {
+    console.log(data);
     return (
       <>
         <h1>{tableName}</h1>
 
         {data !== null && (
-          <Tables data={data} setData={setData} tableName={tableName} />
+          <Tables
+            data={data}
+            setData={setData}
+            loadData={loadData}
+            tableName={tableName}
+          />
         )}
         <InputForm
           fields={fields}
@@ -94,6 +99,7 @@ export default function PageBody({ tableName }) {
           fkeys={fkeys}
           intersectData={intersectData}
           setData={setData}
+          loadData={loadData}
         />
       </>
     );
@@ -113,7 +119,7 @@ export default function PageBody({ tableName }) {
             data={data}
             fkeys={fkeys}
             intersectData={intersectData}
-            setData={setData}
+            loadData={loadData}
           />
         </>
       );

@@ -51,7 +51,35 @@ app.post("/:tableName", function (req, res) {
   console.log(data, operation, tableName);
   var query1 = SQLGenerator(data, tableName, operation);
   console.log(query1);
-  res.send(JSON.stringify(query1));
+  db.pool.query(query1, function (err, results, fields) {
+    if (err) {
+      console.log(err);
+      res.setHeader("Content-Type", "application/json");
+      res.status(400).send(JSON.stringify({ Error: err }));
+    } else {
+      res.setHeader("Content-Type", "application/json");
+      res.status(201).send(results);
+    }
+  });
+});
+
+app.get("/fkeys/:tableName", function (req, res) {
+  var tableName = req.params.tableName;
+  var query1 = "";
+  switch (tableName) {
+    case "Games":
+      var query1 =
+        "SELECT idDeveloper as 'Developer ID', devName as 'Developer Name' FROM Developers;";
+      break;
+    case "Songs":
+      var query1 =
+        "SELECT idGame AS 'Game ID', gameName AS 'Game Name' FROM Games ;";
+      break;
+  }
+  console.log(`TableName: ${tableName} Query: ${query1}`);
+  db.pool.query(query1, function (err, results, fields) {
+    res.send(JSON.stringify(results));
+  });
 });
 
 app.get("/:tableName", function (req, res) {
@@ -69,23 +97,23 @@ app.get("/:tableName", function (req, res) {
       break;
     case "Composers_Songs":
       var query1 =
-        "SELECT Composers_Songs.idSong as 'Song ID', Songs.songName AS 'Song Name', Composers_Songs.idComposer as 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Songs.spotifyPlayCount AS 'Song Spotify Plays' FROM Composers_Songs JOIN Composers ON Composers.idComposer = Composers_Songs.idComposer JOIN Songs on Composers_Songs.idSong = Songs.idSong ORDER BY Songs.spotifyPlayCount DESC";
+        "SELECT Composers_Songs.idSong as 'Song ID', Songs.songName AS 'Song Name', Composers_Songs.idComposer as 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Songs.spotifyPlayCount AS 'Song Spotify Plays' FROM Composers_Songs LEFT JOIN Composers ON Composers.idComposer = Composers_Songs.idComposer LEFT JOIN Songs on Composers_Songs.idSong = Songs.idSong ORDER BY Songs.spotifyPlayCount DESC";
       break;
     case "Composers_Developers":
       var query1 =
-        "SELECT Composers_Developers.idDeveloper AS 'Developer ID', Developers.devName as 'Developer Name' , Composers_Developers.idComposer AS 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Composers.spotifyMonthlyListenerCount AS 'Monthly Spotify Listeners' FROM Composers_Developers JOIN Composers ON Composers_Developers.idComposer = Composers.idComposer JOIN Developers on Developers.idDeveloper = Composers_Developers.idDeveloper";
+        "SELECT Composers_Developers.idDeveloper AS 'Developer ID', Developers.devName as 'Developer Name' , Composers_Developers.idComposer AS 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Composers.spotifyMonthlyListenerCount AS 'Monthly Spotify Listeners' FROM Composers_Developers LEFT JOIN Composers ON Composers_Developers.idComposer = Composers.idComposer LEFT JOIN Developers on Developers.idDeveloper = Composers_Developers.idDeveloper";
       break;
     case "Games":
       var query1 =
-        "SELECT Games.idGame AS 'Game ID', Games.gameName AS 'Game Name', Games.idDeveloper AS 'Developer ID', Developers.devName AS 'Developer Name' FROM Games JOIN Developers on Developers.idDeveloper = Games.idDeveloper;";
+        "SELECT Games.idGame AS 'Game ID', Games.gameName AS 'Game Name', Games.idDeveloper AS 'Developer ID', Developers.devName AS 'Developer Name' FROM Games LEFT JOIN Developers on Developers.idDeveloper = Games.idDeveloper;";
       break;
     case "Games_Composers":
       var query1 =
-        "SELECT Games_Composers.idGame AS 'Game ID', Games.gameName AS 'Game Name', Games_Composers.idComposer AS 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Composers.spotifyMonthlyListenerCount AS 'Monthly Spotify Listeners' FROM Games_Composers JOIN Games on Games.idGame = Games_Composers.idGame JOIN Composers on Composers.idComposer = Games_Composers.idComposer;";
+        "SELECT Games_Composers.idGame AS 'Game ID', Games.gameName AS 'Game Name', Games_Composers.idComposer AS 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Composers.spotifyMonthlyListenerCount AS 'Monthly Spotify Listeners' FROM Games_Composers LEFT JOIN Games on Games.idGame = Games_Composers.idGame LEFT JOIN Composers on Composers.idComposer = Games_Composers.idComposer;";
       break;
     case "Songs":
       var query1 =
-        "SELECT Songs.idSong AS 'Song ID', Songs.songName as 'Song Name', Songs.idGame as 'Game ID', Games.gameName AS 'Game Name', Songs.spotifyPlayCount AS 'Spotify Plays' FROM Songs JOIN Games on Games.idGame = Songs.idGame ORDER BY Songs.spotifyPlayCount DESC;";
+        "SELECT Songs.idSong AS 'Song ID', Songs.songName as 'Song Name', Songs.idGame as 'Game ID', Games.gameName AS 'Game Name', Songs.spotifyPlayCount AS 'Spotify Plays' FROM Songs LEFT JOIN Games on Games.idGame = Songs.idGame ORDER BY Songs.spotifyPlayCount DESC;";
       break;
   }
   console.log(`TableName: ${tableName} Query: ${query1}`);

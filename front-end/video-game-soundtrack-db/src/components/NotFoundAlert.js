@@ -42,7 +42,8 @@ export default function NotFoundAlert({
         <DialogTitle id="alert-dialog-title">{"No Matches Found"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            There were no matches for your search, please try again.
+            There were no matches for your search, please try again. Remember
+            that the search is case specific!
           </DialogContentText>
         </DialogContent>
         <DialogActions>
