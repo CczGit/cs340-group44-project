@@ -3,14 +3,23 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button, Select, MenuItem } from "@mui/material";
 
+const fieldTest = (field, fieldArray) => {
+  if (!fieldArray.includes(field)) {
+    fieldArray.push(field);
+    return true;
+  }
+  return false;
+};
+
 export default function CreateForm({
   fields,
   fkeys,
   onClose,
-  idVar,
-  nameVar,
-  fkeyVar,
+  tableName,
+  intersectData,
+  data,
 }) {
+  const fieldArray = [];
   const firstKey = "";
   if (fkeys) {
     const firstKey = Object.values(fkeys[0])[0];
@@ -35,68 +44,134 @@ export default function CreateForm({
   const handleFKChange = (e) => {
     setFkey(e.target.value);
   };
-  return (
-    <div className="BoxWrapper">
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": {
-            m: 1,
-            p: 1,
-            width: "auto",
-            display: "flex",
-            flexDirection: "column",
-            color: "aliceblue",
-          },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        {fields.map((field, index) => (
-          <>
-            <TextField
-              sx={{
-                "& > :not(style)": {
-                  color: "aliceblue",
-                  fontSize: "large",
-                },
-                "& .MuiInputBase-input": { textAlign: "center" },
-              }}
-              key={index ** 0.14}
-              id={field}
-              label={field}
-              variant="standard"
-              value={createFieldValues[field]}
-              onChange={handleCreateFieldChange(field)}
-            />
-          </>
-        ))}
-        {fkeys !== null && (
-          <>
-            <p>{Object.keys(fkeys[0])[0]}:</p>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              onChange={handleFKChange}
-              value={fkey}
-            >
-              {fkeys.map((fkey, index) => (
-                <MenuItem
-                  key={index ** 0.347}
-                  value={fkey[Object.keys(fkey)[0]]}
-                >
-                  {`${fkey[Object.keys(fkey)[0]]}: ${
-                    fkey[Object.keys(fkey)[1]]
-                  }`}
-                </MenuItem>
-              ))}
-            </Select>
-          </>
-        )}
-        <Button variant="contained" type="submit" onClick={handleSubmit}>
-          CREATE
-        </Button>
-      </Box>
-    </div>
-  );
+  if (!tableName.includes("_")) {
+    return (
+      <div className="BoxWrapper">
+        <Box
+          component="form"
+          sx={{
+            "& > :not(style)": {
+              m: 1,
+              p: 1,
+              textAlign: "center",
+              color: "aliceblue",
+            },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          {fields.map((field, index) => (
+            <>
+              <TextField
+                sx={{
+                  "& > :not(style)": {
+                    color: "aliceblue",
+                    fontSize: "large",
+                  },
+                  "& .MuiInputBase-input": { textAlign: "center" },
+                }}
+                key={index ** 0.14}
+                id={field}
+                label={field}
+                variant="standard"
+                value={createFieldValues[field]}
+                onChange={handleCreateFieldChange(field)}
+              />
+            </>
+          ))}
+          {fkeys !== null && (
+            <>
+              <p>{Object.keys(fkeys[0])[0]}:</p>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                onChange={handleFKChange}
+                value={fkey}
+              >
+                {fkeys.map((fkey, index) => (
+                  <MenuItem
+                    key={index ** 0.347}
+                    value={fkey[Object.keys(fkey)[0]]}
+                  >
+                    {`${fkey[Object.keys(fkey)[0]]}: ${
+                      fkey[Object.keys(fkey)[1]]
+                    }`}
+                  </MenuItem>
+                ))}
+              </Select>
+            </>
+          )}
+          <br />
+          <Button
+            sx={{ width: "80%", borderRadius: "10px" }}
+            variant="contained"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            CREATE
+          </Button>
+        </Box>
+      </div>
+    );
+  } else {
+    return (
+      <div className="BoxWrapper">
+        <Box
+          component="form"
+          sx={{
+            "& > :not(style)": {
+              m: 1,
+              p: 1,
+              textAlign: "center",
+              color: "aliceblue",
+            },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          {intersectData.map((field, fieldIndex) => {
+            if (field.includes("ID")) {
+              const uniqueValues = new Set(data.map((datum) => datum[field]));
+              return (
+                <>
+                  <p>{field}:</p>
+                  <Select
+                    key={fieldIndex}
+                    labelId={`select-${field}-label`}
+                    id={`select-${field}`}
+                    value={createFieldValues[field]}
+                    onChange={handleCreateFieldChange(field)}
+                  >
+                    {[...uniqueValues].map((uniqueValue, index) => {
+                      const datum = data.find(
+                        (datum) => datum[field] === uniqueValue
+                      );
+                      return (
+                        <MenuItem key={index} value={uniqueValue}>
+                          {`${uniqueValue}: ${
+                            datum[intersectData[fieldIndex + 1]]
+                          }`}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </>
+              );
+            }
+            return null;
+          })}
+
+          <br />
+          <Button
+            sx={{ width: "80%", borderRadius: "10px" }}
+            variant="contained"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            CREATE
+          </Button>
+        </Box>
+      </div>
+    );
+  }
 }

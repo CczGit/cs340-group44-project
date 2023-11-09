@@ -20,10 +20,12 @@ export default function PageBody({ tableName }) {
   const [data, setData] = useState(null);
   const [fields, setFields] = useState(null);
   const [fkeys, setFkeys] = useState(null);
+  const [intersectData, setIntersectData] = useState(null);
 
   const loadData = useCallback(async () => {
     setData(null);
     setFkeys(null);
+    setIntersectData(null);
     const response = await fetch(`http://localhost:9100/${tableName}`, {
       method: "Get",
     });
@@ -64,6 +66,7 @@ export default function PageBody({ tableName }) {
       }
     } else {
       setFields(Object.keys(data[0]));
+      setIntersectData(Object.keys(data[0]).slice(0, 4));
     }
   }, [tableName]);
   useEffect(() => {
@@ -80,6 +83,7 @@ export default function PageBody({ tableName }) {
           tableName={tableName}
           data={data}
           fkeys={fkeys}
+          intersectData={intersectData}
         />
       </>
     );

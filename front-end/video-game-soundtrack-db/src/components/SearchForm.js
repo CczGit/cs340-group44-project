@@ -59,9 +59,7 @@ export default function SearchForm({
           "& > :not(style)": {
             m: 1,
             p: 1,
-            width: "auto",
-            display: "flex",
-            alignItems: "flex-start",
+            textAlign: "center",
             color: "aliceblue",
           },
         }}
@@ -98,13 +96,13 @@ export default function SearchForm({
         >
           {filteredData === null &&
             data.map((datum, index) => (
-              <MenuItem key={index ** 0.3} value={datum[idVar]}>
+              <MenuItem key={index ** 0.573} value={datum[idVar]}>
                 {`${datum[idVar]}: ${datum[nameVar]}`}
               </MenuItem>
             ))}
           {filteredData !== null &&
             filteredData.map((datum, index) => (
-              <MenuItem key={index * 0.3} value={datum[idVar]}>
+              <MenuItem key={index * 0.973} value={datum[idVar]}>
                 {`${datum[idVar]}: ${datum[nameVar]}`}
               </MenuItem>
             ))}
@@ -133,11 +131,22 @@ export default function SearchForm({
             </Select>
           </>
         )}
-        <Button variant="contained" type="submit" onClick={handleSubmit}>
+        <br />
+        <Button
+          sx={{ width: "80%", borderRadius: "10px" }}
+          variant="contained"
+          type="submit"
+          onClick={handleSubmit}
+        >
           SEARCH
         </Button>
         {fkey !== 0 && (
-          <Button variant="contained" type="submit" onClick={resetList}>
+          <Button
+            sx={{ width: "80%", borderRadius: "10px" }}
+            variant="contained"
+            type="submit"
+            onClick={resetList}
+          >
             RESET FK CHOICE
           </Button>
         )}

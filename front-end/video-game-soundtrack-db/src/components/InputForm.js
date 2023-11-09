@@ -4,7 +4,13 @@ import UpdateForm from "./UpdateForm";
 import SearchForm from "./SearchForm";
 import { Button, ButtonGroup } from "@mui/material";
 
-export default function InputForm({ data, tableName, fields, fkeys }) {
+export default function InputForm({
+  data,
+  tableName,
+  fields,
+  fkeys,
+  intersectData,
+}) {
   // if id in fields -> get list of ids to values
   // use drop downs for ids
   const [create, setCreate] = useState(false);
@@ -34,7 +40,10 @@ export default function InputForm({ data, tableName, fields, fkeys }) {
               fkeyVar={fkeyVar}
               nameVar={nameVar}
               fields={fields}
+              intersectData={intersectData}
+              tableName={tableName}
               onClose={createHandler}
+              data={data}
             />
           )}
           {update && (
@@ -46,6 +55,8 @@ export default function InputForm({ data, tableName, fields, fkeys }) {
               idVar={idVar}
               fkeyVar={fkeyVar}
               nameVar={nameVar}
+              tableName={tableName}
+              intersectData={intersectData}
             />
           )}
           {search && (
@@ -57,6 +68,8 @@ export default function InputForm({ data, tableName, fields, fkeys }) {
               idVar={idVar}
               nameVar={nameVar}
               fkeyVar={fkeyVar}
+              intersectData={intersectData}
+              tableName={tableName}
             />
           )}
         </div>
@@ -65,12 +78,8 @@ export default function InputForm({ data, tableName, fields, fkeys }) {
         variant="contained"
         aria-label="outlined primary button group"
       >
-        {!create && !tableName.includes("_") && (
-          <Button onClick={createHandler}>CREATE</Button>
-        )}
-        {!update && !tableName.includes("_") && (
-          <Button onClick={updateHandler}>UPDATE</Button>
-        )}
+        {!create && <Button onClick={createHandler}>CREATE</Button>}
+        {!update && <Button onClick={updateHandler}>UPDATE</Button>}
         {!search && <Button onClick={searchHandler}>SEARCH</Button>}
       </ButtonGroup>
     </>

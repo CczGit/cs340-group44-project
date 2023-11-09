@@ -56,11 +56,11 @@ app.get("/:tableName", function (req, res) {
       break;
     case "Composers_Songs":
       var query1 =
-        "SELECT Composers_Songs.idComposer as 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Composers_Songs.idSong as 'Song ID', Songs.songName AS 'Song Name', Songs.spotifyPlayCount AS 'Spotify Plays' FROM Composers_Songs JOIN Composers ON Composers.idComposer = Composers_Songs.idComposer JOIN Songs on Composers_Songs.idSong = Songs.idSong ORDER BY Songs.spotifyPlayCount DESC";
+        "SELECT Composers_Songs.idSong as 'Song ID', Songs.songName AS 'Song Name', Composers_Songs.idComposer as 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Songs.spotifyPlayCount AS 'Song Spotify Plays' FROM Composers_Songs JOIN Composers ON Composers.idComposer = Composers_Songs.idComposer JOIN Songs on Composers_Songs.idSong = Songs.idSong ORDER BY Songs.spotifyPlayCount DESC";
       break;
     case "Composers_Developers":
       var query1 =
-        "SELECT Composers_Developers.idComposer AS 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Composers.spotifyMonthlyListenerCount AS 'Monthly Spotify Listeners', Composers_Developers.idDeveloper AS 'Developer ID', Developers.devName as 'Developer Name' FROM Composers_Developers JOIN Composers ON Composers_Developers.idComposer = Composers.idComposer JOIN Developers on Developers.idDeveloper = Composers_Developers.idDeveloper";
+        "SELECT Composers_Developers.idDeveloper AS 'Developer ID', Developers.devName as 'Developer Name' , Composers_Developers.idComposer AS 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Composers.spotifyMonthlyListenerCount AS 'Monthly Spotify Listeners' FROM Composers_Developers JOIN Composers ON Composers_Developers.idComposer = Composers.idComposer JOIN Developers on Developers.idDeveloper = Composers_Developers.idDeveloper";
       break;
     case "Games":
       var query1 =
