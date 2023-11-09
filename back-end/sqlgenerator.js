@@ -2,6 +2,8 @@ module.exports = function SQLGenerator(data, tableName, operation) {
   switch (tableName) {
     case "Songs":
       switch (operation) {
+        case "DELETE":
+          return `DELETE WHERE id = ${data[0][" ID"]}`;
         case "CREATE":
           return `INSERT INTO SONGS (songName${
             data[0]["Spotify Plays"] !== "" ? ", spotifyPlayCount" : ""
@@ -15,6 +17,8 @@ module.exports = function SQLGenerator(data, tableName, operation) {
       }
     case "Games":
       switch (operation) {
+        case "DELETE":
+          return `DELETE WHERE id = ${data[0][" ID"]}`;
         case "CREATE":
           return `INSERT INTO GAMES (gameName${
             data[1] !== 0 ? ", idDeveloper" : ""
@@ -25,6 +29,8 @@ module.exports = function SQLGenerator(data, tableName, operation) {
       }
     case "Composers":
       switch (operation) {
+        case "DELETE":
+          return `DELETE WHERE id = ${data[0][" ID"]}`;
         case "CREATE":
           return `INSERT INTO COMPOSERS (composerFName${
             data[0]["Composer Last Name"] !== "" ? ", composerLNAME" : ""
@@ -45,22 +51,34 @@ module.exports = function SQLGenerator(data, tableName, operation) {
       }
     case "Developers":
       switch (operation) {
+        case "DELETE":
+          return `DELETE WHERE id = ${data[0][" ID"]}`;
         case "CREATE":
+          return `INSERT INTO DEVELOPERS (devName) VALUES (${data[0]["Developer Name"]})`;
         case "Update":
       }
     case "Composers_Songs":
       switch (operation) {
+        case "DELETE":
+          return `DELETE WHERE id = ${data[0][" ID"]}`;
         case "CREATE":
+          return `INSERT INTO Composers_Songs (idComposer, idSong) VALUES (${data[0]["Composer ID"]} ${data[0]["Song ID"]})`;
         case "Update":
       }
     case "Composers_Developers":
       switch (operation) {
+        case "DELETE":
+          return `DELETE WHERE id = ${data[0][" ID"]}`;
         case "CREATE":
+          return `INSERT INTO Composers_Songs (idComposer, idDeveloper) VALUES (${data[0]["Composer ID"]} ${data[0]["Developer ID"]})`;
         case "Update":
       }
     case "Games_Composers":
       switch (operation) {
+        case "DELETE":
+          return `DELETE WHERE id = ${data[0][" ID"]}`;
         case "CREATE":
+          return `INSERT INTO Composers_Songs (idComposer, idGame) VALUES (${data[0]["Composer ID"]} ${data[0]["Game ID"]})`;
         case "Update":
       }
   }
