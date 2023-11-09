@@ -68,7 +68,7 @@ app.get("/:tableName", function (req, res) {
       break;
     case "Games_Composers":
       var query1 =
-        "SELECT Games_Composers.idGame AS 'Game ID', Games_Composers.idComposer AS 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Composers.spotifyMonthlyListenerCount AS 'Monthly Spotify Listeners' FROM Games_Composers JOIN Games on Games.idGame = Games_Composers.idGame JOIN Composers on Composers.idComposer = Games_Composers.idComposer;";
+        "SELECT Games_Composers.idGame AS 'Game ID', Games.gameName AS 'Game Name', Games_Composers.idComposer AS 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Composers.spotifyMonthlyListenerCount AS 'Monthly Spotify Listeners' FROM Games_Composers JOIN Games on Games.idGame = Games_Composers.idGame JOIN Composers on Composers.idComposer = Games_Composers.idComposer;";
       break;
     case "Songs":
       var query1 =

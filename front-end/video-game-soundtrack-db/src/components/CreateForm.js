@@ -114,64 +114,71 @@ export default function CreateForm({
       </div>
     );
   } else {
-    return (
-      <div className="BoxWrapper">
-        <Box
-          component="form"
-          sx={{
-            "& > :not(style)": {
-              m: 1,
-              p: 1,
-              textAlign: "center",
-              color: "aliceblue",
-            },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          {intersectData.map((field, fieldIndex) => {
-            if (field.includes("ID")) {
-              const uniqueValues = new Set(data.map((datum) => datum[field]));
-              return (
-                <>
-                  <p>{field}:</p>
-                  <Select
-                    key={fieldIndex}
-                    labelId={`select-${field}-label`}
-                    id={`select-${field}`}
-                    value={createFieldValues[field]}
-                    onChange={handleCreateFieldChange(field)}
-                  >
-                    {[...uniqueValues].map((uniqueValue, index) => {
-                      const datum = data.find(
-                        (datum) => datum[field] === uniqueValue
-                      );
-                      return (
-                        <MenuItem key={index} value={uniqueValue}>
-                          {`${uniqueValue}: ${
-                            datum[intersectData[fieldIndex + 1]]
-                          }`}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </>
-              );
-            }
-            return null;
-          })}
-
-          <br />
-          <Button
-            sx={{ width: "80%", borderRadius: "10px" }}
-            variant="contained"
-            type="submit"
-            onClick={handleSubmit}
+    if (intersectData !== null) {
+      return (
+        <div className="BoxWrapper">
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": {
+                m: 1,
+                p: 1,
+                textAlign: "center",
+                color: "aliceblue",
+              },
+            }}
+            noValidate
+            autoComplete="off"
           >
-            CREATE
-          </Button>
-        </Box>
-      </div>
-    );
+            {intersectData.map((field, fieldIndex) => {
+              if (field.includes("ID")) {
+                const uniqueValues = new Set(data.map((datum) => datum[field]));
+                return (
+                  <>
+                    <p>{field}:</p>
+                    <Select
+                      sx={{ minWidth: "170px" }}
+                      key={fieldIndex}
+                      labelId={`select-${field}-label`}
+                      id={`select-${field}`}
+                      value={createFieldValues[field]}
+                      onChange={handleCreateFieldChange(field)}
+                    >
+                      {[...uniqueValues].map((uniqueValue, index) => {
+                        const datum = data.find(
+                          (datum) => datum[field] === uniqueValue
+                        );
+                        return (
+                          <MenuItem key={index} value={uniqueValue}>
+                            {`${uniqueValue}: ${
+                              datum[intersectData[fieldIndex + 1]]
+                            }`}{" "}
+                            {field === "Composer ID" &&
+                              datum[intersectData[fieldIndex + 2]]}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                );
+              }
+              return null;
+            })}
+
+            <br />
+            <Button
+              sx={{ width: "80%", borderRadius: "10px" }}
+              variant="contained"
+              type="submit"
+              onClick={handleSubmit}
+            >
+              CREATE
+            </Button>
+          </Box>
+        </div>
+      );
+    } else {
+      return <p>Loading...</p>;
+    }
   }
 }

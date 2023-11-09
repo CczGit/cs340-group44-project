@@ -135,63 +135,69 @@ export default function UpdateForm({
       </div>
     );
   } else {
-    return (
-      <div className="BoxWrapper">
-        <Box
-          component="form"
-          sx={{
-            "& > :not(style)": {
-              m: 1,
-              p: 1,
-              textAlign: "center",
-              color: "aliceblue",
-            },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          {intersectData.map((field, fieldIndex) => {
-            if (field.includes("ID")) {
-              const uniqueValues = new Set(data.map((datum) => datum[field]));
-              return (
-                <>
-                  <p>{field}:</p>
-                  <Select
-                    key={fieldIndex}
-                    labelId={`select-${field}-label`}
-                    id={`select-${field}`}
-                    value={updateFieldValues[field]}
-                    onChange={handleUpdateFieldChange(field)}
-                  >
-                    {[...uniqueValues].map((uniqueValue, index) => {
-                      const datum = data.find(
-                        (datum) => datum[field] === uniqueValue
-                      );
-                      return (
-                        <MenuItem key={index} value={uniqueValue}>
-                          {`${uniqueValue}: ${
-                            datum[intersectData[fieldIndex + 1]]
-                          }`}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </>
-              );
-            }
-            return null;
-          })}
-          <br />
-          <Button
-            sx={{ width: "80%", borderRadius: "10px" }}
-            variant="contained"
-            type="submit"
-            onClick={handleSubmit}
+    if (intersectData !== null) {
+      return (
+        <div className="BoxWrapper">
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": {
+                m: 1,
+                p: 1,
+                textAlign: "center",
+                color: "aliceblue",
+              },
+            }}
+            noValidate
+            autoComplete="off"
           >
-            UPDATE
-          </Button>
-        </Box>
-      </div>
-    );
+            {intersectData.map((field, fieldIndex) => {
+              if (field.includes("ID")) {
+                const uniqueValues = new Set(data.map((datum) => datum[field]));
+                return (
+                  <>
+                    <p>{field}:</p>
+                    <Select
+                      key={fieldIndex}
+                      labelId={`select-${field}-label`}
+                      id={`select-${field}`}
+                      value={updateFieldValues[field]}
+                      onChange={handleUpdateFieldChange(field)}
+                    >
+                      {[...uniqueValues].map((uniqueValue, index) => {
+                        const datum = data.find(
+                          (datum) => datum[field] === uniqueValue
+                        );
+                        return (
+                          <MenuItem key={index} value={uniqueValue}>
+                            {`${uniqueValue}: ${
+                              datum[intersectData[fieldIndex + 1]]
+                            }`}{" "}
+                            {field === "Composer ID" &&
+                              datum[intersectData[fieldIndex + 2]]}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </>
+                );
+              }
+              return null;
+            })}
+            <br />
+            <Button
+              sx={{ width: "80%", borderRadius: "10px" }}
+              variant="contained"
+              type="submit"
+              onClick={handleSubmit}
+            >
+              UPDATE
+            </Button>
+          </Box>
+        </div>
+      );
+    } else {
+      return <p>Loading...</p>;
+    }
   }
 }

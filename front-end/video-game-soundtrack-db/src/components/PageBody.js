@@ -66,7 +66,7 @@ export default function PageBody({ tableName }) {
       }
     } else {
       setFields(Object.keys(data[0]));
-      setIntersectData(Object.keys(data[0]).slice(0, 4));
+      setIntersectData(Object.keys(data[0]).slice(0, 5));
     }
   }, [tableName]);
   useEffect(() => {

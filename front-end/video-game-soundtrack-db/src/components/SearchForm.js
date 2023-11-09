@@ -9,6 +9,8 @@ export default function SearchForm({
   idVar,
   nameVar,
   fkeyVar,
+  tableName,
+  intersectData,
 }) {
   const [filteredData, setFilteredData] = useState(null);
   const [selectedValue, setSelectedValue] = useState(data[0][idVar]);
@@ -50,107 +52,170 @@ export default function SearchForm({
       setSearchFieldValues(data[0]);
     }
   };
-
-  return (
-    <div className="BoxWrapper">
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": {
-            m: 1,
-            p: 1,
-            textAlign: "center",
-            color: "aliceblue",
-          },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        {fields.map((field, index) => (
-          <>
-            <TextField
-              sx={{
-                "& > :not(style)": {
-                  color: "aliceblue",
-                  fontSize: "large",
-                },
-                "& .MuiInputBase-input": { textAlign: "center" },
-              }}
-              key={index * 0.5}
-              id={field}
-              placeholder={field}
-              label={field}
-              variant="standard"
-              value={searchFieldValues[field]}
-              onChange={handleSearchFieldChange(field)}
-            />
-          </>
-        ))}
-        <p>{Object.keys(data[0])[0]}:</p>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={selectedValue}
-          label="ID"
-          onChange={handleSelectChange}
+  if (!tableName.includes("_")) {
+    return (
+      <div className="BoxWrapper">
+        <Box
+          component="form"
+          sx={{
+            "& > :not(style)": {
+              m: 1,
+              p: 1,
+              textAlign: "center",
+              color: "aliceblue",
+            },
+          }}
+          noValidate
+          autoComplete="off"
         >
-          {filteredData === null &&
-            data.map((datum, index) => (
-              <MenuItem key={index ** 0.573} value={datum[idVar]}>
-                {`${datum[idVar]}: ${datum[nameVar]}`}
-              </MenuItem>
-            ))}
-          {filteredData !== null &&
-            filteredData.map((datum, index) => (
-              <MenuItem key={index * 0.973} value={datum[idVar]}>
-                {`${datum[idVar]}: ${datum[nameVar]}`}
-              </MenuItem>
-            ))}
-        </Select>
-
-        {fkeys !== null && (
-          <>
-            <p>{Object.keys(fkeys[0])[0]}:</p>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="Developer"
-              onChange={handleFKChange}
-              value={fkey}
-            >
-              {fkeys.map((fkey, index) => (
-                <MenuItem
-                  key={index * 0.005}
-                  value={fkey[Object.keys(fkey)[0]]}
-                >
-                  {`${fkey[Object.keys(fkey)[0]]}: ${
-                    fkey[Object.keys(fkey)[1]]
-                  }`}
+          {fields.map((field, index) => (
+            <>
+              <TextField
+                sx={{
+                  "& > :not(style)": {
+                    color: "aliceblue",
+                    fontSize: "large",
+                  },
+                  "& .MuiInputBase-input": { textAlign: "center" },
+                }}
+                key={index * 0.5}
+                id={field}
+                placeholder={field}
+                label={field}
+                variant="standard"
+                value={searchFieldValues[field]}
+                onChange={handleSearchFieldChange(field)}
+              />
+            </>
+          ))}
+          <p>{Object.keys(data[0])[0]}:</p>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={selectedValue}
+            label="ID"
+            onChange={handleSelectChange}
+          >
+            {filteredData === null &&
+              data.map((datum, index) => (
+                <MenuItem key={index ** 0.573} value={datum[idVar]}>
+                  {`${datum[idVar]}: ${datum[nameVar]}`}
                 </MenuItem>
               ))}
-            </Select>
-          </>
-        )}
-        <br />
-        <Button
-          sx={{ width: "80%", borderRadius: "10px" }}
-          variant="contained"
-          type="submit"
-          onClick={handleSubmit}
-        >
-          SEARCH
-        </Button>
-        {fkey !== 0 && (
+            {filteredData !== null &&
+              filteredData.map((datum, index) => (
+                <MenuItem key={index * 0.973} value={datum[idVar]}>
+                  {`${datum[idVar]}: ${datum[nameVar]}`}
+                </MenuItem>
+              ))}
+          </Select>
+
+          {fkeys !== null && (
+            <>
+              <p>{Object.keys(fkeys[0])[0]}:</p>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Developer"
+                onChange={handleFKChange}
+                value={fkey}
+              >
+                {fkeys.map((fkey, index) => (
+                  <MenuItem
+                    key={index * 0.005}
+                    value={fkey[Object.keys(fkey)[0]]}
+                  >
+                    {`${fkey[Object.keys(fkey)[0]]}: ${
+                      fkey[Object.keys(fkey)[1]]
+                    }`}
+                  </MenuItem>
+                ))}
+              </Select>
+            </>
+          )}
+          <br />
           <Button
             sx={{ width: "80%", borderRadius: "10px" }}
             variant="contained"
             type="submit"
-            onClick={resetList}
+            onClick={handleSubmit}
           >
-            RESET FK CHOICE
+            SEARCH
           </Button>
-        )}
-      </Box>
-    </div>
-  );
+          {fkey !== 0 && (
+            <Button
+              sx={{ width: "80%", borderRadius: "10px" }}
+              variant="contained"
+              type="submit"
+              onClick={resetList}
+            >
+              RESET FK CHOICE
+            </Button>
+          )}
+        </Box>
+      </div>
+    );
+  } else if (intersectData !== null) {
+    return (
+      <div className="BoxWrapper">
+        <Box
+          component="form"
+          sx={{
+            "& > :not(style)": {
+              m: 1,
+              p: 1,
+              textAlign: "center",
+              color: "aliceblue",
+            },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          {intersectData.map((field, fieldIndex) => {
+            if (field.includes("ID")) {
+              console.log(intersectData);
+              const uniqueValues = new Set(data.map((datum) => datum[field]));
+              return (
+                <>
+                  <p>{field}:</p>
+                  <Select
+                    key={fieldIndex}
+                    labelId={`select-${field}-label`}
+                    id={`select-${field}`}
+                    value={searchFieldValues[field]}
+                    onChange={handleSelectChange}
+                  >
+                    {[...uniqueValues].map((uniqueValue, index) => {
+                      const datum = data.find(
+                        (datum) => datum[field] === uniqueValue
+                      );
+                      return (
+                        <MenuItem key={index} value={uniqueValue}>
+                          {`${uniqueValue}: ${
+                            datum[intersectData[fieldIndex + 1]]
+                          }`}{" "}
+                          {field === "Composer ID" &&
+                            datum[intersectData[fieldIndex + 2]]}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </>
+              );
+            }
+            return null;
+          })}
+          <br />
+          <Button
+            sx={{ width: "80%", borderRadius: "10px" }}
+            variant="contained"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            SEARCH
+          </Button>
+        </Box>
+      </div>
+    );
+  }
 }

@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   color: aliceblue;
+  overflow-anchor: none;
 }
 
 body {
@@ -28,6 +29,7 @@ body {
   justify-content: center;
   align-items: flex-end;
   padding: 2%;
+  box-sizing: border-box;
   margin: 2% auto;
   min-width: 47%;
   max-width: 80%;
@@ -37,10 +39,6 @@ body {
 
 button {
   transition: transform 0.2s;
-}
-
-form {
-  margin-inline: 5%;
 }
 
 table,
@@ -55,8 +53,8 @@ td {
   }
 }
 .BoxWrapper {
-  padding: 10px;
-  margin-inline: 2.5%;
+  padding: 3.5%;
+  margin-inline: 3.5%;
   border-radius: 50px;
   box-shadow: 0px 0px 10px 10px #0000002d;
   align-items: center;
@@ -74,6 +72,8 @@ footer {
 }
 
 a {
+  margin-inline: 2.5%;
+
   font-size: x-large;
   color: white;
 }
@@ -103,15 +103,13 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 75vw;
-  min-width: 75vw;
-  min-height: 20vh;
   background: linear-gradient(to right, #0062ff85, #60efff85);
   box-shadow: 0px 0px 10px 10px #0000005d;
   border-radius: 30px;
   flex-direction: column;
   padding: 2.5%;
-  margin: 15px;
+  margin: 1.5%;
+  width: 100%;
 }
 
 .App-link {
