@@ -5,14 +5,24 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import Paper from "@mui/material/Paper";
 
-export default function Tables({ data }) {
+export default function Tables({ data, setData }) {
   // if id in fields, get list of ids to values
 
   if (data) {
     const columns = Object.keys(data[0]);
+    const onDelete = (e) => {
+      console.log(
+        `Delete called on Song ID #:${data[e.target.value][columns[0]]}`
+      );
+      if (data.length > 1) {
+        setData(data.filter((_, index) => index !== +e.target.value));
+      } else {
+        setData(null);
+      }
+    };
     return (
       <TableContainer
         className="tableContainer"
@@ -43,7 +53,7 @@ export default function Tables({ data }) {
               <TableRow key={index}>
                 {Object.values(row).map((field, index) => (
                   <TableCell
-                    key={index}
+                    key={index ** 0.68}
                     component="th"
                     scope="row"
                     sx={{ color: "aliceblue" }}
@@ -52,7 +62,13 @@ export default function Tables({ data }) {
                   </TableCell>
                 ))}
                 <TableCell sx={{ color: "white" }}>
-                  <Button color="error" variant="contained" size="small">
+                  <Button
+                    value={index}
+                    onClick={onDelete}
+                    color="error"
+                    variant="contained"
+                    size="small"
+                  >
                     {" "}
                     DELETE{" "}
                   </Button>
@@ -64,6 +80,6 @@ export default function Tables({ data }) {
       </TableContainer>
     );
   } else {
-    return <h1>Loading....</h1>;
+    return <CircularProgress color="inherit" />;
   }
 }

@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { Button, Select, MenuItem } from "@mui/material";
-
-const fieldTest = (field, fieldArray) => {
-  if (!fieldArray.includes(field)) {
-    fieldArray.push(field);
-    return true;
-  }
-  return false;
-};
+import { Button, Select, MenuItem, CircularProgress } from "@mui/material";
 
 export default function CreateForm({
   fields,
@@ -18,11 +10,11 @@ export default function CreateForm({
   tableName,
   intersectData,
   data,
+  setData,
 }) {
-  const fieldArray = [];
-  const firstKey = "";
+  let firstKey = "";
   if (fkeys) {
-    const firstKey = Object.values(fkeys[0])[0];
+    firstKey = Object.values(fkeys[0])[0];
   }
   const [createFieldValues, setCreateFieldValues] = useState(() => {
     const initialFieldValues = {};
@@ -37,8 +29,9 @@ export default function CreateForm({
       [field]: event.target.value,
     }));
   };
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     onClose();
+    console.log(createFieldValues, fkey);
   };
   const [fkey, setFkey] = useState(firstKey);
   const handleFKChange = (e) => {
@@ -87,6 +80,7 @@ export default function CreateForm({
                 id="demo-simple-select"
                 onChange={handleFKChange}
                 value={fkey}
+                sx={{ minWidth: "170px" }}
               >
                 {fkeys.map((fkey, index) => (
                   <MenuItem
@@ -170,6 +164,7 @@ export default function CreateForm({
               sx={{ width: "80%", borderRadius: "10px" }}
               variant="contained"
               type="submit"
+              value={createFieldValues}
               onClick={handleSubmit}
             >
               CREATE
@@ -178,7 +173,7 @@ export default function CreateForm({
         </div>
       );
     } else {
-      return <p>Loading...</p>;
+      return <CircularProgress color="inherit" />;
     }
   }
 }

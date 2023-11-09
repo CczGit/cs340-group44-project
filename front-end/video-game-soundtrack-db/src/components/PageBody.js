@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Tables from "./Tables";
 import InputForm from "./InputForm";
+import CreateForm from "./CreateForm";
+import { CircularProgress } from "@mui/material";
 
 const removeFKeyDuplicates = (fkeyArray) => {
   let newFKeyArray = [];
@@ -26,7 +28,7 @@ export default function PageBody({ tableName }) {
     setData(null);
     setFkeys(null);
     setIntersectData(null);
-    const response = await fetch(`http://localhost:9100/${tableName}`, {
+    const response = await fetch(`./${tableName}`, {
       method: "Get",
     });
     const data = await response.json();
@@ -42,7 +44,10 @@ export default function PageBody({ tableName }) {
         setFkeys(
           removeFKeyDuplicates(
             [
-              { "Developer ID": 0, "Developer Name": "Select Developer" },
+              {
+                "Developer ID": 0,
+                "Developer Name": "NULL",
+              },
             ].concat(
               data.map((datum) => ({
                 "Developer ID": datum["Developer ID"],
@@ -54,7 +59,7 @@ export default function PageBody({ tableName }) {
       } else if (tableName === "Songs") {
         setFields(Object.keys(data[0]).slice(1, 2));
         setFkeys(
-          [{ "Game ID": 0, "Game Name": "Select Game" }].concat(
+          [{ "Game ID": 0, "Game Name": "NULL" }].concat(
             removeFKeyDuplicates(
               data.map((datum) => ({
                 "Game ID": datum["Game ID"],
@@ -77,18 +82,39 @@ export default function PageBody({ tableName }) {
       <>
         <h1>{tableName}</h1>
 
-        <Tables data={data} />
+        {data !== null && <Tables data={data} setData={setData} />}
         <InputForm
           fields={fields}
           tableName={tableName}
           data={data}
           fkeys={fkeys}
           intersectData={intersectData}
+          setData={setData}
         />
       </>
     );
-  } else {
-    <h1>Loading...</h1>;
+  } else if (fields && tableName) {
+    if (tableName.includes(fields[0].substring(0, 3))) {
+      return (
+        <>
+          <h1>{tableName}</h1>
+          <p>
+            This table seems to be empty. Please add values using the form
+            below.
+          </p>
+          <br />
+          <CreateForm
+            fields={fields}
+            tableName={tableName}
+            data={data}
+            fkeys={fkeys}
+            intersectData={intersectData}
+            setData={setData}
+          />
+        </>
+      );
+    } else {
+      return <CircularProgress color="inherit" />;
+    }
   }
-  // TODO: add form here
 }

@@ -11,6 +11,7 @@ export default function SearchForm({
   fkeyVar,
   tableName,
   intersectData,
+  setData,
 }) {
   const [filteredData, setFilteredData] = useState(null);
   const [selectedValue, setSelectedValue] = useState(data[0][idVar]);
@@ -24,7 +25,7 @@ export default function SearchForm({
     setSearchFieldValues((prev) => ({ ...prev, [field]: event.target.value }));
   };
   const handleFKChange = (e) => {
-    if (e.target.value == 0) {
+    if (e.target.value === 0) {
       setFkey(0);
       setFilteredData(null);
     } else {

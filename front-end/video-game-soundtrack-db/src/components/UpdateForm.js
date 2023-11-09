@@ -11,6 +11,7 @@ export default function UpdateForm({
   fkeyVar,
   tableName,
   intersectData,
+  setData,
 }) {
   const [currValue, setCurrValue] = useState(data[0][idVar]);
 
