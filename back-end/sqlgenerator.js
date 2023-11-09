@@ -3,7 +3,7 @@ module.exports = function SQLGenerator(data, tableName, operation) {
     case "Songs":
       switch (operation) {
         case "DELETE":
-          return `DELETE WHERE id = ${data[0][" ID"]}`;
+          return `DELETE FROM Songs WHERE id = ${data[0]}`;
         case "CREATE":
           return `INSERT INTO SONGS (songName${
             data[0]["Spotify Plays"] !== "" ? ", spotifyPlayCount" : ""
@@ -20,7 +20,7 @@ module.exports = function SQLGenerator(data, tableName, operation) {
     case "Games":
       switch (operation) {
         case "DELETE":
-          return `DELETE WHERE id = ${data[0][" ID"]}`;
+          return `DELETE FROM Games WHERE id = ${data[0]}`;
         case "CREATE":
           return `INSERT INTO GAMES (gameName${
             data[1] !== 0 ? ", idDeveloper" : ""
@@ -33,7 +33,7 @@ module.exports = function SQLGenerator(data, tableName, operation) {
     case "Composers":
       switch (operation) {
         case "DELETE":
-          return `DELETE WHERE id = ${data[0][" ID"]}`;
+          return `DELETE FROM Composers WHERE id = ${data[0]}`;
         case "CREATE":
           return `INSERT INTO COMPOSERS (composerFName${
             data[0]["Composer Last Name"] !== "" ? ", composerLNAME" : ""
@@ -56,7 +56,7 @@ module.exports = function SQLGenerator(data, tableName, operation) {
     case "Developers":
       switch (operation) {
         case "DELETE":
-          return `DELETE WHERE id = ${data[0][" ID"]}`;
+          return `DELETE FROM Developers WHERE id = ${data[0]}`;
         case "CREATE":
           return `INSERT INTO DEVELOPERS (devName) VALUES ("${data[0]["Developer Name"]}")`;
         case "UPDATE":
@@ -65,7 +65,7 @@ module.exports = function SQLGenerator(data, tableName, operation) {
     case "Composers_Songs":
       switch (operation) {
         case "DELETE":
-          return `DELETE WHERE id = ${data[0][" ID"]}`;
+          return `DELETE FROM Composers_Songs WHERE idSong = ${data[0]} AND idComposer = ${data[1]}`;
         case "CREATE":
           return `INSERT INTO Composers_Songs (idComposer, idSong) VALUES (${data[0]["Composer ID"]} ${data[0]["Song ID"]})`;
         case "UPDATE":
@@ -74,7 +74,7 @@ module.exports = function SQLGenerator(data, tableName, operation) {
     case "Composers_Developers":
       switch (operation) {
         case "DELETE":
-          return `DELETE WHERE id = ${data[0][" ID"]}`;
+          return `DELETE FROM Composers_Developers WHERE idComposer = ${data[1]} AND idDeveloper = ${data[0]}`;
         case "CREATE":
           return `INSERT INTO Composers_Developers (idComposer, idDeveloper) VALUES (${data[0]["Composer ID"]} ${data[0]["Developer ID"]})`;
         case "UPDATE":
@@ -83,7 +83,7 @@ module.exports = function SQLGenerator(data, tableName, operation) {
     case "Games_Composers":
       switch (operation) {
         case "DELETE":
-          return `DELETE WHERE id = ${data[0][" ID"]}`;
+          return `DELETE FROM Games_Composers WHERE idComposer = ${data[1]} AND idGame = ${data[0]}`;
         case "CREATE":
           return `INSERT INTO Games_Composers (idComposer, idGame) VALUES (${data[0]["Composer ID"]} ${data[0]["Game ID"]})`;
         case "UPDATE":

@@ -84,7 +84,9 @@ export default function PageBody({ tableName }) {
       <>
         <h1>{tableName}</h1>
 
-        {data !== null && <Tables data={data} setData={setData} />}
+        {data !== null && (
+          <Tables data={data} setData={setData} tableName={tableName} />
+        )}
         <InputForm
           fields={fields}
           tableName={tableName}

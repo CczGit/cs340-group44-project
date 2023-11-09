@@ -8,15 +8,24 @@ import TableRow from "@mui/material/TableRow";
 import { Button, CircularProgress } from "@mui/material";
 import Paper from "@mui/material/Paper";
 
-export default function Tables({ data, setData }) {
+export default function Tables({ data, setData, tableName }) {
   // if id in fields, get list of ids to values
 
   if (data) {
     const columns = Object.keys(data[0]);
-    const onDelete = (e) => {
-      console.log(
-        `Delete called on Song ID #:${data[e.target.value][columns[0]]}`
-      );
+    const onDelete = async (e) => {
+      console.log(`Delete called on Song:${data[e.target.value][columns[0]]}`);
+      const request = [
+        data[e.target.value][columns[0]],
+        data[e.target.value][columns[2]],
+        "DELETE",
+      ];
+      const result = await fetch(`./${tableName}`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(request),
+      });
+      console.log(result);
       if (data.length > 1) {
         setData(data.filter((_, index) => index !== +e.target.value));
       } else {
