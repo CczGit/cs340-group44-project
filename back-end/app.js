@@ -50,6 +50,7 @@ app.post("/:tableName", function (req, res) {
   var operation = req.body[2];
   var query1 = SQLGenerator(data, tableName, operation);
   console.log(query1);
+  console.log(data);
   db.pool.query(query1, function (err, results, fields) {
     if (err) {
       console.log(err);
@@ -74,10 +75,48 @@ app.get("/fkeys/:tableName", function (req, res) {
       var query1 =
         "SELECT idGame AS 'Game ID', gameName AS 'Game Name' FROM Games ;";
       break;
+    case "Games_Composers":
+      var query1 =
+        "SELECT idComposer as 'Composer ID', composerFName as 'Composer Name', composerLName as 'Composer Last Name' FROM Composers;";
+      break;
+    case "Composers_Songs":
+      var query1 =
+        "SELECT idComposer as 'Composer ID', composerFName as 'Composer Name', composerLName as 'Composer Last Name' FROM Composers;";
+      break;
+    case "Composers_Developers":
+      var query1 =
+        "SELECT idComposer as 'Composer ID', composerFName as 'Composer Name', composerLName as 'Composer Last Name' FROM Composers;";
+      break;
   }
   console.log(`TableName: ${tableName} Query: ${query1}`);
   db.pool.query(query1, function (err, results, fields) {
     res.send(JSON.stringify(results));
+  });
+});
+
+app.get("/intersectkeys/:tableName", function (req, res) {
+  var tableName = req.params.tableName;
+  var query1 = "";
+  switch (tableName) {
+    case "Games_Composers":
+      var query1 =
+        "SELECT idGame as 'Game ID', gameName as 'Game Name' FROM Games;";
+      break;
+    case "Composers_Songs":
+      var query1 =
+        "SELECT idSong as 'Song ID', songName as 'Song Name', FROM Songs;";
+      break;
+    case "Composers_Developers":
+      var query1 =
+        "SELECT idDeveloper as 'Developer ID', devName as 'Developer Name' FROM Developers;";
+      break;
+  }
+  console.log(`TableName: ${tableName} Query: ${query1}`);
+  db.pool.query(query1, function (err, results, fields) {
+    if (err) {
+    } else {
+      res.status(200).send(JSON.stringify(results));
+    }
   });
 });
 

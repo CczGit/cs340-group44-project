@@ -72,7 +72,17 @@ export default function PageBody({ tableName }) {
       }
     } else {
       setFields(Object.keys(data[0]));
-      setIntersectData(Object.keys(data[0]).slice(0, 5));
+      const fKeysResponse = await fetch(`./fkeys/${tableName}`, {
+        method: "Get",
+      });
+      const fkeyData = await fKeysResponse.json();
+      setFkeys(fkeyData);
+      const intersectResponse = await fetch(`./intersectkeys/${tableName}`, {
+        method: "Get",
+      });
+      const intersectDecoded = await intersectResponse.json();
+      setIntersectData(intersectDecoded);
+      console.log(intersectData, intersectDecoded);
     }
   }, [tableName]);
   useEffect(() => {

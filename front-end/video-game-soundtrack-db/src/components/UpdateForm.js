@@ -45,7 +45,7 @@ export default function UpdateForm({
   };
 
   const handleSubmit = async () => {
-    if (updateFieldValues[nameVar] === "") {
+    if (updateFieldValues[nameVar] === "" && !tableName.includes("_")) {
       setMessage(`Invalid request. ${nameVar} is required`);
       setDialogOpen(true);
     } else {
@@ -57,7 +57,16 @@ export default function UpdateForm({
         body: JSON.stringify(request),
       });
       if (result.status !== 400) {
-        loadData();
+        const data = await result.json();
+
+        setMessage(
+          <>
+            <p>Bad request.</p>
+            <p>Error message: ${data.Error.sqlMessage} </p>
+            <p> Query: ${data.Error.sql}</p>
+          </>
+        );
+        setDialogOpen(true);
       }
     }
   };
@@ -171,6 +180,7 @@ export default function UpdateForm({
     );
   } else {
     if (intersectData !== null) {
+      const field = Object.keys(intersectData[0])[0];
       return (
         <div className="BoxWrapper">
           <Box
@@ -186,39 +196,50 @@ export default function UpdateForm({
             noValidate
             autoComplete="off"
           >
-            {intersectData.map((field, fieldIndex) => {
-              if (field.includes("ID")) {
-                const uniqueValues = new Set(data.map((datum) => datum[field]));
-                return (
-                  <>
-                    <p>{field}:</p>
-                    <Select
-                      key={fieldIndex ** 0.47}
-                      labelId={`select-${field}-label`}
-                      id={`select-${field}`}
-                      value={updateFieldValues[field]}
-                      onChange={handleUpdateFieldChange(field)}
-                    >
-                      {[...uniqueValues].map((uniqueValue, index) => {
-                        const datum = data.find(
-                          (datum) => datum[field] === uniqueValue
-                        );
-                        return (
-                          <MenuItem key={index} value={uniqueValue}>
-                            {`${uniqueValue}: ${
-                              datum[intersectData[fieldIndex + 1]]
-                            }`}{" "}
-                            {field === "Composer ID" &&
-                              datum[intersectData[fieldIndex + 2]]}
-                          </MenuItem>
-                        );
-                      })}
-                    </Select>
-                  </>
-                );
-              }
-              return null;
-            })}
+            <>
+              <p>{Object.keys(intersectData[0])[0]}:</p>
+              <Select
+                sx={{ minWidth: "170px" }}
+                labelId={`select-${field}-label`}
+                id={`select-${field}`}
+                value={updateFieldValues[field]}
+                onChange={handleUpdateFieldChange(field)}
+              >
+                {intersectData.map((datum, index) => {
+                  return (
+                    <MenuItem key={index} value={datum[field]}>
+                      {`${datum[field]}: ${
+                        datum[Object.keys(intersectData[0])[1]]
+                      }`}{" "}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+              {fkeys !== null && (
+                <>
+                  <p>{Object.keys(fkeys[0])[0]}:</p>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    onChange={handleFKChange}
+                    value={fkey}
+                    sx={{ minWidth: "170px" }}
+                  >
+                    {fkeys.map((fkey, index) => (
+                      <MenuItem
+                        key={index ** 0.347}
+                        value={fkey[Object.keys(fkey)[0]]}
+                      >
+                        {`${fkey[Object.keys(fkey)[0]]}: ${
+                          fkey[Object.keys(fkey)[1]]
+                        } ${fkey[Object.keys(fkey)[2]]}`}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </>
+              )}
+            </>
+
             <br />
             <Button
               sx={{ width: "80%", borderRadius: "10px" }}

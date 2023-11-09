@@ -67,7 +67,7 @@ module.exports = function SQLGenerator(data, tableName, operation) {
         case "DELETE":
           return `DELETE FROM Composers_Songs WHERE idSong = ${data[0]} AND idComposer = ${data[1]};`;
         case "CREATE":
-          return `INSERT INTO Composers_Songs (idComposer, idSong) VALUES (${data[0]["Composer ID"]} ${data[0]["Song ID"]});`;
+          return `INSERT INTO Composers_Songs (idComposer, idSong) VALUES (${data[1]}, ${data[0]["Song ID"]});`;
         case "UPDATE":
           return;
       }
@@ -76,7 +76,7 @@ module.exports = function SQLGenerator(data, tableName, operation) {
         case "DELETE":
           return `DELETE FROM Composers_Developers WHERE idComposer = ${data[1]} AND idDeveloper = ${data[0]};`;
         case "CREATE":
-          return `INSERT INTO Composers_Developers (idComposer, idDeveloper) VALUES (${data[0]["Composer ID"]} ${data[0]["Developer ID"]});`;
+          return `INSERT INTO Composers_Developers (idComposer, idDeveloper) VALUES (${data[1]}, ${data[0]["Developer ID"]});`;
         case "UPDATE":
           return;
       }
@@ -85,7 +85,7 @@ module.exports = function SQLGenerator(data, tableName, operation) {
         case "DELETE":
           return `DELETE FROM Games_Composers WHERE idComposer = ${data[1]} AND idGame = ${data[0]};`;
         case "CREATE":
-          return `INSERT INTO Games_Composers (idComposer, idGame) VALUES (${data[0]["Composer ID"]} ${data[0]["Game ID"]});`;
+          return `INSERT INTO Games_Composers (idComposer, idGame) VALUES (${data[1]}, ${data[0]["Game ID"]});`;
         case "UPDATE":
           return;
       }

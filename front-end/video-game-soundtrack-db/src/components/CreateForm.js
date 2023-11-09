@@ -41,11 +41,10 @@ export default function CreateForm({
     }));
   };
   const handleSubmit = async (e) => {
-    if (createFieldValues[nameVar] === "") {
+    if (createFieldValues[nameVar] === "" && !tableName.includes("_")) {
       setMessage(`Invalid request. ${nameVar} is required`);
       setDialogOpen(true);
     } else {
-      onClose();
       const request = [createFieldValues, fkey, "CREATE"];
       const result = await fetch(`./${tableName}`, {
         method: "POST",
@@ -54,9 +53,18 @@ export default function CreateForm({
       });
       if (result.status === 400) {
         const data = await result.json();
-        console.log(data);
+
+        setMessage(
+          <>
+            <p>Bad request.</p>
+            <p>Error message: ${data.Error.sqlMessage} </p>
+            <p> Query: ${data.Error.sql}</p>
+          </>
+        );
+        setDialogOpen(true);
       } else {
         console.log("added successfully");
+        onClose();
         loadData();
       }
     }
@@ -164,6 +172,7 @@ export default function CreateForm({
     );
   } else {
     if (intersectData !== null) {
+      const field = Object.keys(intersectData[0])[0];
       return (
         <div className="BoxWrapper">
           <Box
@@ -179,40 +188,49 @@ export default function CreateForm({
             noValidate
             autoComplete="off"
           >
-            {intersectData.map((field, fieldIndex) => {
-              if (field.includes("ID")) {
-                const uniqueValues = new Set(data.map((datum) => datum[field]));
-                return (
-                  <>
-                    <p>{field}:</p>
-                    <Select
-                      sx={{ minWidth: "170px" }}
-                      key={fieldIndex}
-                      labelId={`select-${field}-label`}
-                      id={`select-${field}`}
-                      value={createFieldValues[field]}
-                      onChange={handleCreateFieldChange(field)}
-                    >
-                      {[...uniqueValues].map((uniqueValue, index) => {
-                        const datum = data.find(
-                          (datum) => datum[field] === uniqueValue
-                        );
-                        return (
-                          <MenuItem key={index} value={uniqueValue}>
-                            {`${uniqueValue}: ${
-                              datum[intersectData[fieldIndex + 1]]
-                            }`}{" "}
-                            {field === "Composer ID" &&
-                              datum[intersectData[fieldIndex + 2]]}
-                          </MenuItem>
-                        );
-                      })}
-                    </Select>
-                  </>
-                );
-              }
-              return null;
-            })}
+            <>
+              <p>{Object.keys(intersectData[0])[0]}:</p>
+              <Select
+                sx={{ minWidth: "170px" }}
+                labelId={`select-${field}-label`}
+                id={`select-${field}`}
+                value={createFieldValues[field]}
+                onChange={handleCreateFieldChange(field)}
+              >
+                {intersectData.map((datum, index) => {
+                  return (
+                    <MenuItem key={index} value={datum[field]}>
+                      {`${datum[field]}: ${
+                        datum[Object.keys(intersectData[0])[1]]
+                      }`}{" "}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+              {fkeys !== null && (
+                <>
+                  <p>{Object.keys(fkeys[0])[0]}:</p>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    onChange={handleFKChange}
+                    value={fkey}
+                    sx={{ minWidth: "170px" }}
+                  >
+                    {fkeys.map((fkey, index) => (
+                      <MenuItem
+                        key={index ** 0.347}
+                        value={fkey[Object.keys(fkey)[0]]}
+                      >
+                        {`${fkey[Object.keys(fkey)[0]]}: ${
+                          fkey[Object.keys(fkey)[1]]
+                        } ${fkey[Object.keys(fkey)[2]]}`}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </>
+              )}
+            </>
 
             <br />
             <Button
