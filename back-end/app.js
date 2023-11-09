@@ -46,7 +46,7 @@ var db = require("./database/db-connector");
 app.post("/:tableName", function (req, res) {
   console.log(req.body);
   var tableName = req.params.tableName;
-  var data = [req.body[0], req.body[1]];
+  var data = [req.body[0], req.body[1], req.body[3]];
   var operation = req.body[2];
   console.log(data, operation, tableName);
   var query1 = SQLGenerator(data, tableName, operation);

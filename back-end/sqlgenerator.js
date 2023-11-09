@@ -7,13 +7,15 @@ module.exports = function SQLGenerator(data, tableName, operation) {
         case "CREATE":
           return `INSERT INTO SONGS (songName${
             data[0]["Spotify Plays"] !== "" ? ", spotifyPlayCount" : ""
-          }${data[1] !== 0 ? ", idGame" : ""}) VALUES (${data[0]["Song Name"]}${
+          }${data[1] !== 0 ? ", idGame" : ""}) VALUES ("${
+            data[0]["Song Name"]
+          }"${
             data[0]["Spotify Plays"] !== ""
               ? `, ${data[0]["Spotify Plays"]})`
               : ""
           }${data[1] !== 0 ? `, ${data[1]}` : ""}`;
-        case "Update":
-          return `UPDATE SONGS SET songName = ${data[0]["Song Name"]}, spotifyPlayCount = ${data[0]["Spotify Plays"]}, idGame = ${data[0]["Game ID"]}  WHERE idSong = ${data[0]["Song ID"]}`;
+        case "UPDATE":
+          return `UPDATE SONGS SET songName = "${data[0]["Song Name"]}", spotifyPlayCount = ${data[0]["Spotify Plays"]}, idGame = ${data[1]}  WHERE idSong = ${data[2]}`;
       }
     case "Games":
       switch (operation) {
@@ -25,7 +27,8 @@ module.exports = function SQLGenerator(data, tableName, operation) {
           }) VALUES (${data[0]["Game Name"]}${
             data[1] !== 0 ? `, ${data[1]}` : ""
           })`;
-        case "Update":
+        case "UPDATE":
+          return `UPDATE GAMES SET gameName = "${data[0]["Game Name"]}", idDeveloper = ${data[1]} WHERE idGame = ${data[2]}`;
       }
     case "Composers":
       switch (operation) {
@@ -38,24 +41,26 @@ module.exports = function SQLGenerator(data, tableName, operation) {
             data[0]["Monthly Spotify Listeners"] !== ""
               ? ", spotifyMonthlyListenerCount"
               : ""
-          }) VALUES (${data[0]["Composer First Name"]}${
+          }) VALUES ("${data[0]["Composer First Name"]}"${
             data[0]["Composer Last Name"] !== ""
-              ? `, ${data[0]["Composer Last Name"]}`
+              ? `, "${data[0]["Composer Last Name"]}"`
               : ""
           }${
             data[0]["Monthly Spotify Listeners"] !== ""
               ? `, ${data[0]["Monthly Spotify Listeners"]}`
               : ""
           })`;
-        case "Update":
+        case "UPDATE":
+          return `UPDATE Composers SET composerFName = "${data[0]["Composer First Name"]}", composerLName = "${data[0]["Composer Last Name"]}", spotifyMontlyListenerCount = ${data[0]["Monthly Spotify Listeners"]} WHERE idComposer = ${data[2]}`;
       }
     case "Developers":
       switch (operation) {
         case "DELETE":
           return `DELETE WHERE id = ${data[0][" ID"]}`;
         case "CREATE":
-          return `INSERT INTO DEVELOPERS (devName) VALUES (${data[0]["Developer Name"]})`;
-        case "Update":
+          return `INSERT INTO DEVELOPERS (devName) VALUES ("${data[0]["Developer Name"]}")`;
+        case "UPDATE":
+          return `UPDATE Developers SET devName = "${data[0]["Developer Name"]}" WHERE idDeveloper = ${data[2]}`;
       }
     case "Composers_Songs":
       switch (operation) {
@@ -63,23 +68,26 @@ module.exports = function SQLGenerator(data, tableName, operation) {
           return `DELETE WHERE id = ${data[0][" ID"]}`;
         case "CREATE":
           return `INSERT INTO Composers_Songs (idComposer, idSong) VALUES (${data[0]["Composer ID"]} ${data[0]["Song ID"]})`;
-        case "Update":
+        case "UPDATE":
+          return;
       }
     case "Composers_Developers":
       switch (operation) {
         case "DELETE":
           return `DELETE WHERE id = ${data[0][" ID"]}`;
         case "CREATE":
-          return `INSERT INTO Composers_Songs (idComposer, idDeveloper) VALUES (${data[0]["Composer ID"]} ${data[0]["Developer ID"]})`;
-        case "Update":
+          return `INSERT INTO Composers_Developers (idComposer, idDeveloper) VALUES (${data[0]["Composer ID"]} ${data[0]["Developer ID"]})`;
+        case "UPDATE":
+          return;
       }
     case "Games_Composers":
       switch (operation) {
         case "DELETE":
           return `DELETE WHERE id = ${data[0][" ID"]}`;
         case "CREATE":
-          return `INSERT INTO Composers_Songs (idComposer, idGame) VALUES (${data[0]["Composer ID"]} ${data[0]["Game ID"]})`;
-        case "Update":
+          return `INSERT INTO Games_Composers (idComposer, idGame) VALUES (${data[0]["Composer ID"]} ${data[0]["Game ID"]})`;
+        case "UPDATE":
+          return;
       }
   }
 };

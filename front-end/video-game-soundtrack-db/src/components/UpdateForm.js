@@ -41,8 +41,16 @@ export default function UpdateForm({
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     onClose();
+    const request = [updateFieldValues, fkey, "UPDATE", currValue];
+    console.log(updateFieldValues);
+    const result = await fetch(`./${tableName}`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(request),
+    });
+    console.log(result);
   };
   const [fkey, setFkey] = useState(data[0][fkeyVar]);
   const handleFKChange = (e) => {
