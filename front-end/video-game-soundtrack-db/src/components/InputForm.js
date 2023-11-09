@@ -42,18 +42,20 @@ export default function InputForm({
         {(create || update || search) && (
           <div className="formContainer">
             {create && (
-              <CreateForm
-                fkeys={fkeys}
-                idVar={idVar}
-                fkeyVar={fkeyVar}
-                nameVar={nameVar}
-                fields={fields}
-                intersectData={intersectData}
-                tableName={tableName}
-                onClose={createHandler}
-                data={data}
-                loadData={loadData}
-              />
+              <>
+                <CreateForm
+                  fkeys={fkeys}
+                  idVar={idVar}
+                  fkeyVar={fkeyVar}
+                  nameVar={nameVar}
+                  fields={fields}
+                  intersectData={intersectData}
+                  tableName={tableName}
+                  onClose={createHandler}
+                  data={data}
+                  loadData={loadData}
+                />
+              </>
             )}
             {update && (
               <UpdateForm

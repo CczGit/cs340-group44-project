@@ -48,7 +48,6 @@ app.post("/:tableName", function (req, res) {
   var tableName = req.params.tableName;
   var data = [req.body[0], req.body[1], req.body[3]];
   var operation = req.body[2];
-  console.log(data, operation, tableName);
   var query1 = SQLGenerator(data, tableName, operation);
   console.log(query1);
   db.pool.query(query1, function (err, results, fields) {
@@ -118,7 +117,7 @@ app.get("/:tableName", function (req, res) {
   }
   console.log(`TableName: ${tableName} Query: ${query1}`);
   db.pool.query(query1, function (err, results, fields) {
-    console.log(err, results);
+    console.log(err);
     res.send(JSON.stringify(results));
   });
 });

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { TextField, Box, Button, Select, MenuItem } from "@mui/material";
+import { TextField, Box, Button, Select, MenuItem, Grid } from "@mui/material";
 import NotFoundAlert from "./NotFoundAlert";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function SearchForm({
   fields,
@@ -101,6 +102,19 @@ export default function SearchForm({
       return (
         <>
           <div className="BoxWrapper">
+            <Grid
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                padding: "1%",
+              }}
+            >
+              <CloseIcon
+                fontSize="large"
+                sx={{ cursor: "pointer" }}
+                onClick={onClose}
+              />
+            </Grid>
             <Box
               component="form"
               sx={{
@@ -206,6 +220,15 @@ export default function SearchForm({
       return (
         <>
           <div className="BoxWrapper">
+            <Grid
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                padding: "1%",
+              }}
+            >
+              <CloseIcon fontSize="large" onClick={onClose} />
+            </Grid>
             <Box
               component="form"
               sx={{

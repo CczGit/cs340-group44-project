@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { Button, Select, MenuItem, CircularProgress } from "@mui/material";
+import {
+  Button,
+  Select,
+  MenuItem,
+  CircularProgress,
+  Grid,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function CreateForm({
   fields,
@@ -52,6 +59,19 @@ export default function CreateForm({
   if (!tableName.includes("_")) {
     return (
       <div className="BoxWrapper">
+        <Grid
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            padding: "1%",
+          }}
+        >
+          <CloseIcon
+            fontSize="large"
+            sx={{ cursor: "pointer" }}
+            onClick={onClose}
+          />
+        </Grid>
         <Box
           component="form"
           sx={{
