@@ -1,3 +1,8 @@
+/*
+  Search Form Dialog Component
+  Includes code from the Material UI documentation for the Material UI components used.
+*/
+
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";

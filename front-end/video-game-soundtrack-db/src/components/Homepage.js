@@ -1,3 +1,5 @@
+/* Home Page Component*/
+
 import React from "react-router-dom";
 
 export default function HomePage() {

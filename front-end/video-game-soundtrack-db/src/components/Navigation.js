@@ -1,3 +1,5 @@
+/* simple react router nav component pointing to all tables*/
+
 import React from "react";
 import { Link } from "react-router-dom";
 

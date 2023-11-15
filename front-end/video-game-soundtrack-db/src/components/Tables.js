@@ -1,3 +1,8 @@
+/*
+  Main Table Component
+  Includes code from the Material UI documentation for the Material UI components used.
+*/
+
 import React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,22 +14,37 @@ import { Button, CircularProgress } from "@mui/material";
 import Paper from "@mui/material/Paper";
 
 export default function Tables({ data, setData, tableName }) {
-  // if id in fields, get list of ids to values
-
+  // conditional render of table, only show if there is data
   if (data) {
+    // fields are columns
     const columns = Object.keys(data[0]);
+    // this has to be inside here to avoid errors
     const onDelete = async (e) => {
+      /* data holds all values, 
+      e.target.value will be the index of the deleted value,
+      columns array holds the field names ie: "Developer ID"
+      three values required for delete query:
+      column 0 will be the primary key
+      column 2 will be any foreign key if present
+      "DELETE" the operation to be completed*/
       const request = [
         data[e.target.value][columns[0]],
         data[e.target.value][columns[2]],
         "DELETE",
       ];
-      const result = await fetch(`./${tableName}`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(request),
-      });
+      const result = await fetch(
+        `http://flip2.engr.oregonstate.edu:9142/${tableName}`,
+        {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(request),
+        }
+      );
+      // only delete if the query went through
       if (result.status !== 400) {
+        /*if there is only one value, set data to null 
+        to avoid errors due to attempting to render an
+        empty array */
         if (data.length > 1) {
           setData(data.filter((_, index) => index !== +e.target.value));
         } else {
@@ -46,6 +66,7 @@ export default function Tables({ data, setData, tableName }) {
         <Table size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
+              {/* one column per field */}
               {columns.map((column) => (
                 <TableCell
                   sx={{ color: "aliceblue", fontSize: "large" }}
@@ -58,6 +79,7 @@ export default function Tables({ data, setData, tableName }) {
             </TableRow>
           </TableHead>
           <TableBody>
+            {/* one row per entry */}
             {data.map((row, index) => (
               <TableRow key={index}>
                 {Object.values(row).map((field, index) => (

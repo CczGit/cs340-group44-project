@@ -1,8 +1,12 @@
+/*
+  Search Form Component
+  Includes code from the Material UI documentation for the Material UI components used.
+*/
+
 import React, { useState } from "react";
 import { TextField, Box, Button, Select, MenuItem, Grid } from "@mui/material";
 import NotFoundAlert from "./NotFoundAlert";
 import CloseIcon from "@mui/icons-material/Close";
-
 export default function SearchForm({
   fields,
   onClose,
@@ -16,8 +20,13 @@ export default function SearchForm({
   setData,
   setOldData,
 }) {
+  // dialog box controller
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  // data to show when the user has chosen a filter
   const [filteredData, setFilteredData] = useState(null);
+
+  // fields to search, initialized to first value on table
   const [searchFieldValues, setSearchFieldValues] = useState(() => {
     const initialValues = {};
     Object.keys(data[0]).forEach(
@@ -25,7 +34,11 @@ export default function SearchForm({
     );
     return initialValues;
   });
+
+  // start with null as foreign key
   const [fkey, setFkey] = useState(0);
+
+  // when user starts modifying any search value, clear all others
   const handleSearchFieldChange = (field) => (event) => {
     setSearchFieldValues((prev) => {
       const newValues = { ...prev };
@@ -41,32 +54,47 @@ export default function SearchForm({
   };
 
   const handleFKChange = (e) => {
-    if (e.target.value === 0) {
-      setFkey(0);
-      setFilteredData(null);
-    } else {
-      setSearchFieldValues((prev) => {
-        const newValues = { ...prev };
-        Object.keys(newValues).forEach((field) => {
-          if (field !== fkeyVar) {
-            newValues[field] = "";
-          } else {
-            newValues[field] = e.target.value;
-          }
-        });
-        return newValues;
+    // reset values on null fkey being chosen
+
+    // set all field values to empty when a foreign key is chosen
+    setSearchFieldValues((prev) => {
+      const newValues = { ...prev };
+      Object.keys(newValues).forEach((field) => {
+        if (field !== fkeyVar) {
+          newValues[field] = "";
+        } else {
+          newValues[field] = e.target.value;
+        }
       });
-      setFkey(e.target.value);
-      const newData = data.filter((datum) => datum[fkeyVar] === e.target.value);
-      setFilteredData(newData);
-    }
+      return newValues;
+    });
+    // filter values based on chosen foreign key
+    setFkey(e.target.value);
+    const newData = data.filter((datum) => datum[fkeyVar] === e.target.value);
+    setFilteredData(newData);
   };
+
   const handleSubmit = () => {
+    // filter data based on entered search field
     const newData = data.filter((datum) => {
       let isMatch = true;
       for (const field in searchFieldValues) {
-        if (searchFieldValues[field] === "") continue;
-        if (
+        if (searchFieldValues[field] === "" && field !== fkeyVar) continue;
+        /*undefined doesn't have .toString() 
+          returning here here avoids errors when a field is null*/
+        if (!datum[field]) {
+          // for cases when we're searching for null FKeys
+          if (field === fkeyVar && searchFieldValues[field] === 0) {
+            return true;
+          }
+          isMatch = false;
+          break;
+        }
+        // precise search when searching by ID
+        if (field.includes("ID"))
+          return datum[field] === searchFieldValues[field];
+        else if (
+          // return false when a field doesn't include the entered value
           !datum[field].toString().includes(searchFieldValues[field].toString())
         ) {
           isMatch = false;
@@ -76,18 +104,22 @@ export default function SearchForm({
       return isMatch;
     });
     if (newData.length !== 0) {
+      // modify displayed data if there are matches
       setOldData(data);
       setData(newData);
       onClose();
     } else {
+      // open dialgo box if there are no matches
       setDialogOpen(true);
     }
   };
+
+  // resets the table
   const resetList = () => {
     setFkey(0);
     setFilteredData(null);
   };
-
+  // conditional render of dialog box
   if (dialogOpen) {
     return (
       <NotFoundAlert
@@ -97,10 +129,13 @@ export default function SearchForm({
       />
     );
   } else {
+    // normal render for non-intersect tables
     if (!tableName.includes("_")) {
       return (
         <>
           <div className="BoxWrapper">
+            {/*container for the close icon 
+              so that we can align it to the right*/}
             <Grid
               sx={{
                 display: "flex",
@@ -114,6 +149,7 @@ export default function SearchForm({
                 onClick={onClose}
               />
             </Grid>
+            {/*form container*/}
             <Box
               component="form"
               sx={{
@@ -127,6 +163,9 @@ export default function SearchForm({
               noValidate
               autoComplete="off"
             >
+              {/*text box for each text field, ID fields 
+               won't show here due to splicing during initial
+               useEffect query*/}
               {fields.map((field, index) => (
                 <>
                   <TextField
@@ -137,7 +176,7 @@ export default function SearchForm({
                       },
                       "& .MuiInputBase-input": { textAlign: "center" },
                     }}
-                    key={index ** 0.5}
+                    key={index ** 7.25}
                     id={field}
                     placeholder={field}
                     label={field}
@@ -147,6 +186,7 @@ export default function SearchForm({
                   />
                 </>
               ))}
+              {/*display ID field as a drop down*/}
               <p>{Object.keys(data[0])[0]}:</p>
               <Select
                 labelId="demo-simple-select-label"
@@ -161,14 +201,15 @@ export default function SearchForm({
                       {`${datum[idVar]}: ${datum[nameVar]}`}
                     </MenuItem>
                   ))}
+                {/*render filtered data only if data has been filtered*/}
                 {filteredData !== null &&
                   filteredData.map((datum, index) => (
-                    <MenuItem key={index * 0.973} value={datum[idVar]}>
+                    <MenuItem key={index * 1.973} value={datum[idVar]}>
                       {`${datum[idVar]}: ${datum[nameVar]}`}
                     </MenuItem>
                   ))}
               </Select>
-
+              {/*render fkeys when present*/}
               {fkeys !== null && (
                 <>
                   <p>{Object.keys(fkeys[0])[0]}:</p>
@@ -179,9 +220,10 @@ export default function SearchForm({
                     onChange={handleFKChange}
                     value={searchFieldValues[fkeyVar]}
                   >
+                    {/*one select menu option per foreign key option*/}
                     {fkeys.map((fkey, index) => (
                       <MenuItem
-                        key={index * 0.005}
+                        key={index * 1.005}
                         value={fkey[Object.keys(fkey)[0]]}
                       >
                         {`${fkey[Object.keys(fkey)[0]]}: ${
@@ -201,33 +243,30 @@ export default function SearchForm({
               >
                 SEARCH
               </Button>
-              {fkey !== 0 && (
+
+              {filteredData !== null && (
                 <Button
                   sx={{ width: "80%", borderRadius: "10px" }}
                   variant="contained"
                   type="submit"
                   onClick={resetList}
                 >
-                  RESET FK CHOICE
+                  RESET FOREIGN KEY
                 </Button>
               )}
             </Box>
           </div>
         </>
       );
+      // special render case for intersect tables
     } else if (intersectData !== null) {
+      /*get the name of the non-composer id variable
+      all of our intersect tables include composers,
+      intersectData will hold the non-composer ids and names*/
+      const field = Object.keys(intersectData[0])[0];
       return (
         <>
           <div className="BoxWrapper">
-            <Grid
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                padding: "1%",
-              }}
-            >
-              <CloseIcon fontSize="large" onClick={onClose} />
-            </Grid>
             <Box
               component="form"
               sx={{
@@ -241,45 +280,51 @@ export default function SearchForm({
               noValidate
               autoComplete="off"
             >
-              {intersectData.map((field, fieldIndex) => {
-                if (field.includes("ID")) {
-                  const uniqueValues = new Set(
-                    data.map((datum) => datum[field])
-                  );
-                  return (
-                    <>
-                      <p>{field}:</p>
-                      <Select
-                        key={fieldIndex}
-                        labelId={`select-${field}-label`}
-                        id={`select-${field}`}
-                        value={searchFieldValues[field]}
-                        onChange={handleSearchFieldChange(field)}
-                      >
-                        <MenuItem key={field + "Null"} value={0}>
-                          0: NULL
+              <>
+                {/*render the non-composer field name and id:name select options*/}
+                <p>{Object.keys(intersectData[0])[0]}:</p>
+                <Select
+                  sx={{ minWidth: "170px" }}
+                  labelId={`select-${field}-label`}
+                  id={`select-${field}`}
+                  value={searchFieldValues[field]}
+                  onChange={handleSearchFieldChange(field)}
+                >
+                  {intersectData.map((datum, index) => {
+                    return (
+                      <MenuItem key={index ** 3.87} value={datum[field]}>
+                        {`${datum[field]}: ${
+                          datum[Object.keys(intersectData[0])[1]]
+                        }`}{" "}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+                {fkeys !== null && (
+                  <>
+                    {/*render the composer field name id:name select options*/}
+                    <p>{Object.keys(fkeys[0])[0]}:</p>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      onChange={handleFKChange}
+                      value={fkey}
+                      sx={{ minWidth: "170px" }}
+                    >
+                      {fkeys.map((fkey, index) => (
+                        <MenuItem
+                          key={index ** 1.347}
+                          value={fkey[Object.keys(fkey)[0]]}
+                        >
+                          {`${fkey[Object.keys(fkey)[0]]}: ${
+                            fkey[Object.keys(fkey)[1]]
+                          } ${fkey[Object.keys(fkey)[2]]}`}
                         </MenuItem>
-                        {[...uniqueValues].map((uniqueValue, index) => {
-                          const datum = data.find(
-                            (datum) => datum[field] === uniqueValue
-                          );
-                          return (
-                            <MenuItem key={index} value={uniqueValue}>
-                              {`${uniqueValue}: ${
-                                datum[intersectData[fieldIndex + 1]]
-                              }`}{" "}
-                              {field === "Composer ID" &&
-                                datum[intersectData[fieldIndex + 2]]}
-                            </MenuItem>
-                          );
-                        })}
-                      </Select>
-                    </>
-                  );
-                }
-                return null;
-              })}
-              <br />
+                      ))}
+                    </Select>
+                  </>
+                )}
+              </>
               <Button
                 sx={{ width: "80%", borderRadius: "10px" }}
                 variant="contained"

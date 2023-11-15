@@ -1,3 +1,8 @@
+/*
+  Main Forms Component
+  Includes code from the Material UI documentation for the Material UI components used.
+*/
+
 import React, { useState } from "react";
 import CreateForm from "./CreateForm";
 import UpdateForm from "./UpdateForm";
