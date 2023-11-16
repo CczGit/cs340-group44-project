@@ -75,7 +75,9 @@ export default function Tables({ data, setData, tableName }) {
                   {column}
                 </TableCell>
               ))}
-              <TableCell sx={{ color: "white" }}></TableCell>
+              {!tableName.includes("_") && (
+                <TableCell sx={{ color: "white" }}></TableCell>
+              )}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -92,18 +94,20 @@ export default function Tables({ data, setData, tableName }) {
                     {field}
                   </TableCell>
                 ))}
-                <TableCell sx={{ color: "white" }}>
-                  <Button
-                    value={index}
-                    onClick={onDelete}
-                    color="error"
-                    variant="contained"
-                    size="small"
-                  >
-                    {" "}
-                    DELETE{" "}
-                  </Button>
-                </TableCell>
+                {!tableName.includes("_") && (
+                  <TableCell sx={{ color: "white" }}>
+                    <Button
+                      value={index}
+                      onClick={onDelete}
+                      color="error"
+                      variant="contained"
+                      size="small"
+                    >
+                      {" "}
+                      DELETE{" "}
+                    </Button>
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>
