@@ -32,14 +32,11 @@ export default function Tables({ data, setData, tableName }) {
         data[e.target.value][columns[2]],
         "DELETE",
       ];
-      const result = await fetch(
-        `http://flip2.engr.oregonstate.edu:9142/${tableName}`,
-        {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(request),
-        }
-      );
+      const result = await fetch(`./${tableName}`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(request),
+      });
       // only delete if the query went through
       if (result.status !== 400) {
         /*if there is only one value, set data to null 
