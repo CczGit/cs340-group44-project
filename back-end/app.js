@@ -7,7 +7,7 @@ var express = require("express");
 const SQLGenerator = require("./sqlgenerator");
 var app = express();
 app.use(express.json());
-PORT = 3000;
+PORT = 9142;
 
 // Database
 var db = require("./database/db-connector");

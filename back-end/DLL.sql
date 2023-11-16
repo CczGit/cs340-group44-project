@@ -101,11 +101,11 @@ CREATE TABLE IF NOT EXISTS `Composers_Developers` (
   CONSTRAINT `fk_Composers_Developers_Composers1`
     FOREIGN KEY (`idComposer`)
     REFERENCES `Composers` (`idComposer`)
-    ON DELETE SET NULL,
+    ON DELETE CASCADE,
   CONSTRAINT `fk_Composers_Developers_Developers1`
     FOREIGN KEY (`idDeveloper`)
     REFERENCES `Developers` (`idDeveloper`)
-    ON DELETE SET NULL
+    ON DELETE CASCADE
     )
 ENGINE = InnoDB;
 
@@ -113,7 +113,7 @@ ENGINE = InnoDB;
 -- Dumping data for table `Composers_Developers`
 -- -----------------------------------------------------
 
-INSERT INTO Composers_Developers (idComposer, idDeveloper) VALUES (1,1),(2,2),(12,2),(3,3),(3,10),(4,4),(5,5),(6,7),(7,6),(8,5),(9,5),(10,8),(11,2);
+INSERT INTO Composers_Developers (idComposer, idDeveloper) VALUES (1,1),(2,2),(12,2),(3,3),(3,1),(4,4),(5,5),(6,7),(7,6),(8,5),(9,5),(10,8),(11,2);
 
 -- -----------------------------------------------------
 -- Table structure for table `Games_Composers`
@@ -128,11 +128,11 @@ CREATE TABLE IF NOT EXISTS `Games_Composers` (
   CONSTRAINT `fk_Games_Composers_Games1`
     FOREIGN KEY (`idGame`)
     REFERENCES `Games` (`idGame`)
-    ON DELETE SET NULL,
+    ON DELETE CASCADE,
   CONSTRAINT `fk_Games_Composers_Composers1`
     FOREIGN KEY (`idComposer`)
     REFERENCES `Composers` (`idComposer`)
-    ON DELETE SET NULL
+    ON DELETE CASCADE
     )
 ENGINE = InnoDB;
 
@@ -155,11 +155,11 @@ CREATE TABLE IF NOT EXISTS `Composers_Songs` (
   CONSTRAINT `fk_Composers_Songs_Composers1`
     FOREIGN KEY (`idComposer`)
     REFERENCES `Composers` (`idComposer`)
-    ON DELETE SET NULL,
+    ON DELETE CASCADE,
   CONSTRAINT `fk_Composers_Songs_Songs1`
     FOREIGN KEY (`idSong`)
     REFERENCES `Songs` (`idSong`)
-    ON DELETE SET NULL
+    ON DELETE CASCADE
     )
 ENGINE = InnoDB;
 

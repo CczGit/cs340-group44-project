@@ -4,7 +4,7 @@
 */
 
 import "./App.css";
-import { Routes, Route, useParams, HashRouter } from "react-router-dom";
+import { Routes, Route, useParams, HashRouter, Button } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import PageBody from "./components/PageBody";
 import HomePage from "./components/Homepage";
@@ -23,6 +23,7 @@ export default function App() {
       <HashRouter>
         <header>
           <Navigation />
+          <Button>Reload DLL.sql</Button>
         </header>
         <div className="card">
           <Routes>
