@@ -4,7 +4,14 @@
 */
 
 import "./App.css";
-import { Routes, Route, useParams, HashRouter, Button } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useParams,
+  HashRouter,
+  Button,
+  useEffect,
+} from "react-router-dom";
 import Navigation from "./components/Navigation";
 import PageBody from "./components/PageBody";
 import HomePage from "./components/Homepage";
@@ -16,6 +23,13 @@ function PageBodyWrapper() {
   return <PageBody tableName={tableName} />;
 }
 
+const reloadTables = useCallback(async () => {
+  // initial query, table specifics for this and all queries are defined in express
+  await fetch(`./resetTables`, {
+    method: "Post",
+  });
+});
+
 export default function App() {
   return (
     <div className="App">
@@ -23,7 +37,7 @@ export default function App() {
       <HashRouter>
         <header>
           <Navigation />
-          <Button>Reload DLL.sql</Button>
+          <Button onclick={reloadTables}>Reload DLL.sql</Button>
         </header>
         <div className="card">
           <Routes>
