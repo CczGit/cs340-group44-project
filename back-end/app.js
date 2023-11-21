@@ -36,20 +36,6 @@ app.post("/:tableName", function (req, res) {
   });
 });
 
-app.post("/resetTables", function (req, res) {
-  var query1 = "Source DLL.sql";
-  db.pool.query(query1, function (err, results, fields) {
-    if (err) {
-      console.log(err);
-      res.setHeader("Content-Type", "application/json");
-      res.status(400).send(JSON.stringify({ Error: err }));
-    } else {
-      res.setHeader("Content-Type", "application/json");
-      res.status(200).send(results);
-    }
-  });
-});
-
 app.get("/fkeys/:tableName", function (req, res) {
   var tableName = req.params.tableName;
   var query1 = "";

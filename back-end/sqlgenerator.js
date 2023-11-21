@@ -51,7 +51,7 @@ module.exports = function SQLGenerator(data, tableName, operation) {
               : ""
           });`;
         case "UPDATE":
-          return `UPDATE Composers SET composerFName = "${data[0]["Composer First Name"]}", composerLName = "${data[0]["Composer Last Name"]}", spotifyMontlyListenerCount = ${data[0]["Monthly Spotify Listeners"]} WHERE idComposer = ${data[2]};`;
+          return `UPDATE Composers SET composerFName = "${data[0]["Composer First Name"]}", composerLName = "${data[0]["Composer Last Name"]}", spotifyMonthlyListenerCount = ${data[0]["Monthly Spotify Listeners"]} WHERE idComposer = ${data[2]};`;
       }
     case "Developers":
       switch (operation) {

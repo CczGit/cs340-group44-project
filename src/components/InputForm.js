@@ -1,8 +1,3 @@
-/*
-  Main Forms Component
-  Includes code from the Material UI documentation for the Material UI components used.
-*/
-
 import React, { useState } from "react";
 import CreateForm from "./CreateForm";
 import UpdateForm from "./UpdateForm";
@@ -96,7 +91,6 @@ export default function InputForm({
         <ButtonGroup
           variant="contained"
           aria-label="outlined primary button group"
-          sx={{ margin: "2%" }}
         >
           {!create && <Button onClick={createHandler}>CREATE</Button>}
           {!update && <Button onClick={updateHandler}>UPDATE</Button>}
