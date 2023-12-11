@@ -13,7 +13,7 @@ import TableRow from "@mui/material/TableRow";
 import { Button, CircularProgress } from "@mui/material";
 import Paper from "@mui/material/Paper";
 
-export default function Tables({ data, setData, tableName }) {
+export default function Tables({ data, setData, tableName, loadData }) {
   // conditional render of table, only show if there is data
   if (data) {
     // fields are columns
@@ -42,11 +42,7 @@ export default function Tables({ data, setData, tableName }) {
         /*if there is only one value, set data to null 
         to avoid errors due to attempting to render an
         empty array */
-        if (data.length > 1) {
-          setData(data.filter((_, index) => index !== +e.target.value));
-        } else {
-          setData(null);
-        }
+        loadData();
       }
     };
     return (
@@ -72,9 +68,7 @@ export default function Tables({ data, setData, tableName }) {
                   {column}
                 </TableCell>
               ))}
-              {!tableName.includes("_") && (
-                <TableCell sx={{ color: "white" }}></TableCell>
-              )}
+              <TableCell sx={{ color: "white" }}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -91,20 +85,18 @@ export default function Tables({ data, setData, tableName }) {
                     {field}
                   </TableCell>
                 ))}
-                {!tableName.includes("_") && (
-                  <TableCell sx={{ color: "white" }}>
-                    <Button
-                      value={index}
-                      onClick={onDelete}
-                      color="error"
-                      variant="contained"
-                      size="small"
-                    >
-                      {" "}
-                      DELETE{" "}
-                    </Button>
-                  </TableCell>
-                )}
+                <TableCell sx={{ color: "white" }}>
+                  <Button
+                    value={index}
+                    onClick={onDelete}
+                    color="error"
+                    variant="contained"
+                    size="small"
+                  >
+                    {" "}
+                    DELETE{" "}
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

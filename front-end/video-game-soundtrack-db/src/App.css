@@ -2,6 +2,7 @@
   text-align: center;
   color: aliceblue;
   overflow-anchor: none;
+  max-width: 75vw;
 }
 
 body {

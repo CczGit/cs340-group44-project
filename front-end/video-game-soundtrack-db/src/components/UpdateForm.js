@@ -43,9 +43,15 @@ export default function UpdateForm({
   // fields to be passed into the query, initialized to first value on table
   const [updateFieldValues, setUpdateFieldValues] = useState(() => {
     const initialFieldValues = {};
-    fields.forEach((field) => {
-      initialFieldValues[field] = data[0][field] || "";
-    });
+    if (!tableName.includes("_")) {
+      fields.forEach((field) => {
+        initialFieldValues[field] = data[0][field] || "";
+      });
+    } else {
+      Object.keys(intersectData[0]).forEach((field) => {
+        initialFieldValues[field] = data[0][field] || "";
+      });
+    }
     return initialFieldValues;
   });
 
@@ -267,6 +273,20 @@ export default function UpdateForm({
       const field = Object.keys(intersectData[0])[0];
       return (
         <div className="BoxWrapper">
+          {/*container for the close icon 
+        so that we can align it to the right*/}
+          <Box
+            sx={{ display: "flex", justifyContent: "flex-end", padding: "1%" }}
+            key={"gridClose"}
+          >
+            <CloseIcon
+              fontSize="large"
+              sx={{ cursor: "pointer" }}
+              onClick={onClose}
+              key={"closeupdate"}
+            />
+          </Box>
+          {/*form container*/}
           <Box
             component="form"
             sx={{
@@ -281,6 +301,23 @@ export default function UpdateForm({
             autoComplete="off"
           >
             <>
+              {/*display ID field for choosing which item to update*/}
+              <p>{Object.keys(data[0])[0]}:</p>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={currValue}
+                label="ID"
+                onChange={handleSelectChange}
+              >
+                {data.map((datum, index) => (
+                  <MenuItem key={index ** 9.35} value={datum[idVar]}>
+                    {`${datum[idVar]}: ${datum[fields[2]]} : ${
+                      datum[fields[4]]
+                    }`}
+                  </MenuItem>
+                ))}
+              </Select>
               {/*render the non-composer field name and id:name select options*/}
               <p>{Object.keys(intersectData[0])[0]}:</p>
               <Select

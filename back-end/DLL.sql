@@ -94,8 +94,10 @@ INSERT INTO Songs (songName, spotifyPlayCount, idGame) VALUES	('The Last Of Us',
 DROP TABLE IF EXISTS `Composers_Developers` ;
 
 CREATE TABLE IF NOT EXISTS `Composers_Developers` (
+  `idComposerDeveloper` INT NOT NULL AUTO_INCREMENT,
   `idComposer` INT NULL,
   `idDeveloper` INT NULL,
+  PRIMARY KEY (`idComposerDeveloper`),
   INDEX `fk_Composers_Developers_Developers1_idx` (`idDeveloper` ASC) VISIBLE,
   INDEX `fk_Composers_Developers_Composers1_idx` (`idComposer` ASC) VISIBLE,
   CONSTRAINT `fk_Composers_Developers_Composers1`
@@ -121,8 +123,10 @@ INSERT INTO Composers_Developers (idComposer, idDeveloper) VALUES (1,1),(2,2),(1
 DROP TABLE IF EXISTS `Games_Composers` ;
 
 CREATE TABLE IF NOT EXISTS `Games_Composers` (
+  `idComposerGame` INT NOT NULL AUTO_INCREMENT,
   `idGame` INT NULL,
   `idComposer` INT NULL,
+  PRIMARY KEY (`idComposerGame`),
   INDEX `fk_Games_Composers_Composers1_idx` (`idComposer` ASC) VISIBLE,
   INDEX `fk_Games_Composers_Games1_idx` (`idGame` ASC) VISIBLE,
   CONSTRAINT `fk_Games_Composers_Games1`
@@ -148,8 +152,10 @@ INSERT INTO Games_Composers (idComposer, idGame) VALUES (1,1),(2,2),(12,2),(3,3)
 DROP TABLE IF EXISTS `Composers_Songs` ;
 
 CREATE TABLE IF NOT EXISTS `Composers_Songs` (
+  `idComposerSong` INT NOT NULL AUTO_INCREMENT,
   `idComposer` INT NULL,
   `idSong` INT NULL,
+  PRIMARY KEY (`idComposerSong`),
   INDEX `fk_Composers_Songs_Songs1_idx` (`idSong` ASC) VISIBLE,
   INDEX `fk_Composers_Songs_Composers1_idx` (`idComposer` ASC) VISIBLE,
   CONSTRAINT `fk_Composers_Songs_Composers1`

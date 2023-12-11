@@ -22,12 +22,54 @@ VALUES (:songNameInput, :idGameInput);
 INSERT INTO Games (gameName, idDeveloper)
 VALUES (:gameNameInput, :idDeveloperInput);
 
+-- Query for adding a new composer_songs functionality with colon : character being used to 
+-- denote the variables that will have data from the backend programming language
+
+INSERT INTO Composers_Songs (idComposer, idSong) 
+VALUES ( :idComposerInput, :idSongInput)
+
+
+-- Query for adding a new games_composer functionality with colon : character being used to 
+-- denote the variables that will have data from the backend programming language
+
+INSERT INTO Games_Composers (idComposer, idGame) 
+VALUES ( :idComposerInput, :idGameInput)
+
+
+-- Query for adding a new composer_developers functionality with colon : character being used to 
+-- denote the variables that will have data from the backend programming language
+
+INSERT INTO Composers_Developers (idComposer, idDeveloper) 
+VALUES ( :idComposerInput, :idDeveloperInput)
+
+
 -- Query for updating a composer functionality with colon : character being used to 
 -- denote the variables that will have data from the backend programming language
 
 UPDATE Composers
 SET composerFName = :composerFNameInput, composerLName = :composerLNameInput
 WHERE idComposer = :idComposerInput;
+
+-- Query for updating a composer_songs functionality with colon : character being used to 
+-- denote the variables that will have data from the backend programming language
+
+UPDATE Composers_Songs
+SET idComposer = :idComposerInput, idSong = :idSongInput
+WHERE idComposerSong = :idComposerSongInput;
+
+-- Query for updating a games_composer functionality with colon : character being used to 
+-- denote the variables that will have data from the backend programming language
+
+UPDATE Games_Composers
+SET idComposer = :idComposerInput, idGame = :idGameInput
+WHERE idComposerGame = :idComposerGameInput;
+
+-- Query for updating a composer_developers functionality with colon : character being used to 
+-- denote the variables that will have data from the backend programming language
+
+UPDATE Composers_Developers
+SET idComposer = :idComposerInput, idDeveloper = :idDeveloperInput
+WHERE idComposerDeveloper = :idComposerDeveloperInput;
 
 -- Query for updating a developer functionality with colon : character being used to 
 -- denote the variables that will have data from the backend programming language

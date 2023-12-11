@@ -248,6 +248,20 @@ export default function CreateForm({
       const field = Object.keys(intersectData[0])[0];
       return (
         <div className="BoxWrapper">
+          {/*container for the close icon 
+        so that we can align it to the right*/}
+          <Box
+            sx={{ display: "flex", justifyContent: "flex-end", padding: "1%" }}
+            key={"gridClose"}
+          >
+            <CloseIcon
+              fontSize="large"
+              sx={{ cursor: "pointer" }}
+              onClick={onClose}
+              key={"closeupdate"}
+            />
+          </Box>
+          {/*form container*/}
           <Box
             component="form"
             sx={{

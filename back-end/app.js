@@ -109,11 +109,11 @@ app.get("/:tableName", function (req, res) {
       break;
     case "Composers_Songs":
       var query1 =
-        "SELECT Composers_Songs.idSong as 'Song ID', Songs.songName AS 'Song Name', Composers_Songs.idComposer as 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Songs.spotifyPlayCount AS 'Song Spotify Plays' FROM Composers_Songs LEFT JOIN Composers ON Composers.idComposer = Composers_Songs.idComposer LEFT JOIN Songs on Composers_Songs.idSong = Songs.idSong ORDER BY Songs.spotifyPlayCount DESC";
+        "SELECT Composers_Songs.idComposerSong as ID, Composers_Songs.idSong as 'Song ID', Songs.songName AS 'Song Name', Composers_Songs.idComposer as 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Songs.spotifyPlayCount AS 'Song Spotify Plays' FROM Composers_Songs LEFT JOIN Composers ON Composers.idComposer = Composers_Songs.idComposer LEFT JOIN Songs on Composers_Songs.idSong = Songs.idSong ORDER BY Songs.spotifyPlayCount DESC";
       break;
     case "Composers_Developers":
       var query1 =
-        "SELECT Composers_Developers.idDeveloper AS 'Developer ID', Developers.devName as 'Developer Name' , Composers_Developers.idComposer AS 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Composers.spotifyMonthlyListenerCount AS 'Monthly Spotify Listeners' FROM Composers_Developers LEFT JOIN Composers ON Composers_Developers.idComposer = Composers.idComposer LEFT JOIN Developers on Developers.idDeveloper = Composers_Developers.idDeveloper";
+        "SELECT Composers_Developers.idComposerDeveloper as ID, Composers_Developers.idDeveloper AS 'Developer ID', Developers.devName as 'Developer Name' , Composers_Developers.idComposer AS 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Composers.spotifyMonthlyListenerCount AS 'Monthly Spotify Listeners' FROM Composers_Developers LEFT JOIN Composers ON Composers_Developers.idComposer = Composers.idComposer LEFT JOIN Developers on Developers.idDeveloper = Composers_Developers.idDeveloper";
       break;
     case "Games":
       var query1 =
@@ -121,7 +121,7 @@ app.get("/:tableName", function (req, res) {
       break;
     case "Games_Composers":
       var query1 =
-        "SELECT Games_Composers.idGame AS 'Game ID', Games.gameName AS 'Game Name', Games_Composers.idComposer AS 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Composers.spotifyMonthlyListenerCount AS 'Monthly Spotify Listeners' FROM Games_Composers LEFT JOIN Games on Games.idGame = Games_Composers.idGame LEFT JOIN Composers on Composers.idComposer = Games_Composers.idComposer;";
+        "SELECT Games_Composers.idComposerGame as ID, Games_Composers.idGame AS 'Game ID', Games.gameName AS 'Game Name', Games_Composers.idComposer AS 'Composer ID', Composers.composerFName as 'Composer First Name', Composers.composerLName as 'Composer Last Name', Composers.spotifyMonthlyListenerCount AS 'Monthly Spotify Listeners' FROM Games_Composers LEFT JOIN Games on Games.idGame = Games_Composers.idGame LEFT JOIN Composers on Composers.idComposer = Games_Composers.idComposer;";
       break;
     case "Songs":
       var query1 =

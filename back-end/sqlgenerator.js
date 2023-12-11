@@ -15,7 +15,11 @@ module.exports = function SQLGenerator(data, tableName, operation) {
               : ""
           }${data[1] !== 0 ? `, ${data[1]}` : ""});`;
         case "UPDATE":
-          return `UPDATE Songs SET songName = "${data[0]["Song Name"]}", spotifyPlayCount = ${data[0]["Spotify Plays"]}, idGame = ${data[1]}  WHERE idSong = ${data[2]};`;
+          return `UPDATE Songs SET songName = "${
+            data[0]["Song Name"]
+          }", spotifyPlayCount = ${data[0]["Spotify Plays"]}, idGame = ${
+            data[1] !== 0 ? data[1] : "NULL"
+          }  WHERE idSong = ${data[2]};`;
       }
     case "Games":
       switch (operation) {
@@ -28,7 +32,11 @@ module.exports = function SQLGenerator(data, tableName, operation) {
             data[1] !== 0 ? `, ${data[1]}` : ""
           });`;
         case "UPDATE":
-          return `UPDATE Games SET gameName = "${data[0]["Game Name"]}", idDeveloper = ${data[1]} WHERE idGame = ${data[2]};`;
+          return `UPDATE Games SET gameName = "${
+            data[0]["Game Name"]
+          }", idDeveloper = ${
+            data[1] !== 0 ? data[1] : "NULL"
+          } WHERE idGame = ${data[2]};`;
       }
     case "Composers":
       switch (operation) {
@@ -65,29 +73,29 @@ module.exports = function SQLGenerator(data, tableName, operation) {
     case "Composers_Songs":
       switch (operation) {
         case "DELETE":
-          return `DELETE FROM Composers_Songs WHERE idSong = ${data[0]} AND idComposer = ${data[1]};`;
+          return `DELETE FROM Composers_Songs WHERE idComposerSong = ${data[0]};`;
         case "CREATE":
           return `INSERT INTO Composers_Songs (idComposer, idSong) VALUES (${data[1]}, ${data[0]["Song ID"]});`;
         case "UPDATE":
-          return;
+          return `UPDATE Composers_Songs SET idComposer = "${data[1]}", idSong = "${data[0]["Song ID"]}" WHERE idComposerSong = ${data[2]};`;
       }
     case "Composers_Developers":
       switch (operation) {
         case "DELETE":
-          return `DELETE FROM Composers_Developers WHERE idComposer = ${data[1]} AND idDeveloper = ${data[0]};`;
+          return `DELETE FROM Composers_Developers WHERE idComposerDeveloper = ${data[0]};`;
         case "CREATE":
           return `INSERT INTO Composers_Developers (idComposer, idDeveloper) VALUES (${data[1]}, ${data[0]["Developer ID"]});`;
         case "UPDATE":
-          return;
+          return `UPDATE Composers_Developers SET idComposer = "${data[1]}", idDeveloper = "${data[0]["Developer ID"]}" WHERE idComposerDeveloper = ${data[2]};`;
       }
     case "Games_Composers":
       switch (operation) {
         case "DELETE":
-          return `DELETE FROM Games_Composers WHERE idComposer = ${data[1]} AND idGame = ${data[0]};`;
+          return `DELETE FROM Games_Composers WHERE idComposerGame = ${data[0]};`;
         case "CREATE":
           return `INSERT INTO Games_Composers (idComposer, idGame) VALUES (${data[1]}, ${data[0]["Game ID"]});`;
         case "UPDATE":
-          return;
+          return `UPDATE Games_Composers SET idComposer = "${data[1]}", idGame = "${data[0]["Game ID"]}" WHERE idComposerGame = ${data[2]};`;
       }
   }
 };

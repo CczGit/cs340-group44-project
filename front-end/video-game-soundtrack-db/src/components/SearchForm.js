@@ -163,29 +163,6 @@ export default function SearchForm({
               noValidate
               autoComplete="off"
             >
-              {/*text box for each text field, ID fields 
-               won't show here due to splicing during initial
-               useEffect query*/}
-              {fields.map((field, index) => (
-                <>
-                  <TextField
-                    sx={{
-                      "& > :not(style)": {
-                        color: "aliceblue",
-                        fontSize: "large",
-                      },
-                      "& .MuiInputBase-input": { textAlign: "center" },
-                    }}
-                    key={index ** 7.25}
-                    id={field}
-                    placeholder={field}
-                    label={field}
-                    variant="standard"
-                    value={searchFieldValues[field]}
-                    onChange={handleSearchFieldChange(field)}
-                  />
-                </>
-              ))}
               {/*display ID field as a drop down*/}
               <p>{Object.keys(data[0])[0]}:</p>
               <Select
@@ -267,6 +244,24 @@ export default function SearchForm({
       return (
         <>
           <div className="BoxWrapper">
+            {/*container for the close icon 
+        so that we can align it to the right*/}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                padding: "1%",
+              }}
+              key={"gridClose"}
+            >
+              <CloseIcon
+                fontSize="large"
+                sx={{ cursor: "pointer" }}
+                onClick={onClose}
+                key={"closeupdate"}
+              />
+            </Box>
+            {/*form container*/}
             <Box
               component="form"
               sx={{
