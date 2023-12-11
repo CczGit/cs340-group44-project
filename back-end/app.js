@@ -1,5 +1,6 @@
 /*
-    Includes code from CS340 nodejs-starter-app
+db connect and db.pool.query functions are based heavily on the CS340 nodejs-starter-app code. Taken on November 14 2023.
+Link: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%201%20-%20Connecting%20to%20a%20MySQL%20Database
 */
 
 // Express

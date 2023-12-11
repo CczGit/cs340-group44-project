@@ -1,6 +1,7 @@
 /*
    Main App Render Component
-   Code using wrapper to read the router parameter is not our own.
+   PageBodyWrapper function is not our own and was adapted from a post in StackOverflow on November 14th 2023 
+   (link: https://stackoverflow.com/questions/58548767/react-router-dom-useparams-inside-class-component)
 */
 
 import "./App.css";

@@ -1,6 +1,8 @@
 /*
   Create Form Component
-  Includes code from the Material UI documentation for the Material UI components used.
+  All material UI components are implemented using code based heavily on
+  the material UI documentation. Taken throughout different dates between November and December of 2023
+  Link: https://mui.com/material-ui/getting-started/
  */
 
 import React, { Fragment, useState } from "react";
